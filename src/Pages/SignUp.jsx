@@ -582,7 +582,7 @@ export const SignUp = () => {
      </div>
          }
             {field.label === 'Courses' ? (
-              <FormControl sx={{ width: '100%' }}>
+              <FormControl sx={{ width: '100%',marginTop:"22px" }}>
                 <InputLabel id={`demo-multiple-checkbox-label-${field.id}`}>
                   {field.label}
                 </InputLabel>
