@@ -26,6 +26,7 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { DateField } from "@mui/x-date-pickers/DateField";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { createTheme } from '@mui/material/styles';
 import dayjs from "dayjs";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -36,6 +37,7 @@ const MenuProps = {
     },
   },
 };
+
 export const SignUp = () => {
   const navigation = useNavigate();
   const isMobile =
@@ -268,6 +270,7 @@ export const SignUp = () => {
               variant="outlined"
               size="small"
               color={TrainerSelected ? "error" : "success"}
+
               style={{ marginLeft: "30px" }}
               onClick={handelTrainerSelected}
             >
@@ -582,7 +585,7 @@ export const SignUp = () => {
      </div>
          }
             {field.label === 'Courses' ? (
-              <FormControl sx={{ width: '100%',marginTop:"22px" }}>
+              <FormControl sx={{ width: '100%',marginTop:"21px" }}>
                 <InputLabel id={`demo-multiple-checkbox-label-${field.id}`}>
                   {field.label}
                 </InputLabel>
@@ -590,7 +593,7 @@ export const SignUp = () => {
                   value={field.value}
                   onChange={(e) => handleChange2Trainer(e, field.id)}
                   input={<OutlinedInput label={field.label} />}
-                  
+                  style={{height:"56px"}}
                 >
                   {/* Replace 'course' with your actual array of course options */}
                   {course.map((name) => (
