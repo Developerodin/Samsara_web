@@ -547,7 +547,7 @@ export const SignUp = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <div style={{padding:5,backgroundColor:"#F4EAE0",borderRadius:10,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div style={{padding:5,backgroundColor:"#F4EAE0",borderRadius:10,display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"20px"}}>
                     <div>
                     <Typography style={{letterSpacing:1,fontWeight:"bold",color:"grey",fontSize:"14px"}}>Qualification</Typography>
                     </div>
@@ -627,6 +627,11 @@ export const SignUp = () => {
           
         </Grid> */}
     
+    <Grid item xs={12}>
+                 <div style={{marginTop:"20px"}}>
+
+                 </div>
+                </Grid>
    
 
 
