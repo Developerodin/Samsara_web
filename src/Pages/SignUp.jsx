@@ -571,7 +571,16 @@ export const SignUp = () => {
                 {inputFields.map((field, index) => (
           <Grid item xs={6} key={field.id}>
             {/* ... your numbering logic ... */}
-
+            {
+          index % 4 === 0 ?
+          <div style={{ padding: '5px', marginBottom: '5px',width:"100%" }}>
+           {index % 4 === 0 && setCounter + Math.floor(index / 4)}. {/* Displaying numbering for each set of four input fields */}
+        </div>
+        :
+        <div style={{ padding: '5px', marginBottom: '5px' }}>
+         {/* Displaying numbering for each set of four input fields */}
+     </div>
+         }
             {field.label === 'Courses' ? (
               <FormControl sx={{ width: '100%' }}>
                 <InputLabel id={`demo-multiple-checkbox-label-${field.id}`}>
