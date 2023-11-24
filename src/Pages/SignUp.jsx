@@ -45,40 +45,101 @@ export const SignUp = () => {
   const [personName, setPersonName] = React.useState([]);
   const [visibleSection, setVisibleSection] = useState(1);
   const [showPass, setPass] = useState(false);
-  const [formData, setFormData] = useState({
-    phoneNumber: "",
-    otp: "",
-  });
+ 
   const [TrainerSelected, setTrainerSelected] = useState(false);
   const [PersonalSelected, setPersonalSelected] = useState(true);
   const [CorporateSelected, setCorporateSelected] = useState(false);
 
   const [inputFields, setInputFields] = useState([
     { id: 1, label: 'College', value: '' },
-    { id: 2, label: 'Courses', value: [] },
+    { id: 2, label: 'Courses', value:'' },
     { id: 3, label: 'Passing Year', value: '' },
     { id: 4, label: 'Additional therapy or courses', value: '' },
   ]);
   const [setCounter, setSetCounter] = useState(1);
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-  const handleChange2 = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-  const handleChange3 = (event, index) => {
-    const newInputFields = [...inputFields];
-    newInputFields[index].value = event.target.value;
-    setInputFields(newInputFields);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    companyName: '',
+    corporateId: '',
+    mobile: '',
+    dob: null,
+    city: '',
+    pincode: '',
+    country: '',
+    height: '',
+    weight: '',
+    healthIssues: [],
+    description: '',
+  });
+
+  const [formDataTrainer, setFormDatasetFormData] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    dob: null,
+    city: '',
+    pincode: '',
+    country: '',
+    description: '',
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
+  const handleChange2 = (event) => {
+    const {target: { value },} = event;
+    setFormData((prevData) => ({
+      ...prevData,
+      healthIssues: typeof value === "string" ? value.split(",") : value,
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      dob: date,
+    }));
+  };
+
+  const handleChangeTrainer = (e) => {
+    const { name, value } = e.target;
+    setFormDatasetFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleChange2Trainer = (event,id) => {
+    const {target: { value },} = event;
+    const updatedFields = inputFields.map((field) =>
+      field.id === id
+        ? { ...field, value: value }
+        : field
+    );
+    setInputFields(updatedFields);
+  };
+
+  const handleDateChangeTrainer = (date) => {
+    setFormDatasetFormData((prevData) => ({
+      ...prevData,
+      dob: date,
+    }));
+  };
+  const handleChange3 = (e, id) => {
+    const updatedFields = inputFields.map((field) =>
+      field.id === id
+        ? { ...field, value: e.target.value }
+        : field
+    );
+    setInputFields(updatedFields);
+  };
+
+  
  
 
   const handleAddFields = () => {
@@ -118,8 +179,13 @@ export const SignUp = () => {
 
   const handelContinue = () => {
     navigation("/login");
+    console.log("Data ===>",formData )
   };
-
+  const handelTrainerContinue = ()=>{
+    navigation("/login");
+    console.log("Data Trainer ===>",formDataTrainer )
+    console.log("Data of map inputs",inputFields)
+  }
   const handelBack = () => {
     setPass(false);
   };
@@ -183,7 +249,7 @@ export const SignUp = () => {
             <Button
               variant="outlined"
               size="small"
-              color={PersonalSelected ? "success" : "error"}
+              color={PersonalSelected ? "error" : "success"}
               onClick={handelPersonalSelected}
             >
               Personal
@@ -192,7 +258,7 @@ export const SignUp = () => {
             <Button
               variant="outlined"
               size="small"
-              color={CorporateSelected ? "success" : "error"}
+              color={CorporateSelected ? "error" : "success"}
               style={{ marginLeft: "30px" }}
               onClick={handelCorporateSelected}
             >
@@ -201,7 +267,7 @@ export const SignUp = () => {
             <Button
               variant="outlined"
               size="small"
-              color={TrainerSelected ? "success" : "error"}
+              color={TrainerSelected ? "error" : "success"}
               style={{ marginLeft: "30px" }}
               onClick={handelTrainerSelected}
             >
@@ -218,7 +284,9 @@ export const SignUp = () => {
                     label="Name"
                     variant="outlined"
                     style={{ width: "100%" }}
-                    name="phoneNumber"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                   />
                 </Grid>
 
@@ -228,8 +296,10 @@ export const SignUp = () => {
                     label="Email id"
                     variant="outlined"
                     style={{ width: "100%" }}
-                    name="phoneNumber"
-                  />
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                   />
                 </Grid>
                 {CorporateSelected && (
                   <Grid item xs={6}>
@@ -238,7 +308,9 @@ export const SignUp = () => {
                       label="Company Name"
                       variant="outlined"
                       style={{ width: "100%" }}
-                      name="phoneNumber"
+                      name="companyName"
+                    value={formData.companyName}
+                    onChange={handleChange}
                     />
                   </Grid>
                 )}
@@ -246,10 +318,12 @@ export const SignUp = () => {
                   <Grid item xs={6}>
                     <TextField
                       id="outlined-basic"
-                      label="Employee id"
+                      label="Corporate Id"
                       variant="outlined"
                       style={{ width: "100%" }}
-                      name="phoneNumber"
+                      name="corporateId"
+                      value={formData.corporateId}
+                    onChange={handleChange}
                     />
                   </Grid>
                 )}
@@ -260,6 +334,9 @@ export const SignUp = () => {
                     label="Mobile"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="mobile"
+                    value={formData.mobile}
+                  onChange={handleChange}
                   />
                 </Grid>
 
@@ -268,7 +345,10 @@ export const SignUp = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       {/* <DemoContainer components={['DateField']}>
                       <DemoItem label="Date"> */}
-                      <DateField placeholder="DOB" style={{ width: "100%" }} />
+                      <DateField placeholder="DOB" style={{ width: "100%" }}
+                       value={formData.dob}
+                       onChange={handleDateChange}
+                      />
                       {/* </DemoItem>
       </DemoContainer> */}
                     </LocalizationProvider>
@@ -281,15 +361,21 @@ export const SignUp = () => {
                     label="City"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="city"
+                    value={formData.city}
+                  onChange={handleChange}
                   />
                 </Grid>
 
                 <Grid item xs={4}>
                   <TextField
                     id="outlined-basic"
-                    label=" Pincode"
+                    label="Pincode"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="pincode"
+                    value={formData.pincode}
+                  onChange={handleChange}
                   />
                 </Grid>
 
@@ -299,6 +385,9 @@ export const SignUp = () => {
                     label="Country"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="country"
+                    value={formData.country}
+                  onChange={handleChange}
                   />
                 </Grid>
 
@@ -308,6 +397,9 @@ export const SignUp = () => {
                     label="Height"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="height"
+                    value={formData.height}
+                  onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={4}>
@@ -316,6 +408,9 @@ export const SignUp = () => {
                     label="Weight"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="weight"
+                    value={formData.weight}
+                  onChange={handleChange}
                   />
                 </Grid>
 
@@ -329,7 +424,7 @@ export const SignUp = () => {
                         labelId="demo-multiple-checkbox-label"
                         id="demo-multiple-checkbox"
                         multiple
-                        value={personName}
+                        value={formData.healthIssues}
                         onChange={handleChange2}
                         input={<OutlinedInput label="Tag" />}
                         renderValue={(selected) => selected.join(", ")}
@@ -338,7 +433,7 @@ export const SignUp = () => {
                       >
                         {names.map((name) => (
                           <MenuItem key={name} value={name}>
-                            <Checkbox checked={personName.indexOf(name) > -1} />
+                            <Checkbox checked={formData.healthIssues.indexOf(name) > -1} />
                             <ListItemText primary={name} />
                           </MenuItem>
                         ))}
@@ -359,6 +454,9 @@ export const SignUp = () => {
                       minRows={4}
                       maxRows={5}
                       placeholder="Describe here"
+                      name="description"
+                      value={formData.description}
+                    onChange={handleChange}
                     />
                   </div>
                 </Grid>
@@ -389,9 +487,10 @@ export const SignUp = () => {
           {TrainerSelected && (
             <div 
             style={{
-              marginTop: 30,
+              marginTop: 25,
+              height:"600px",
               overflowY: "auto",
-              height: "650px",
+              paddingTop:5,
               
                // Hide the scrollbar
             }}
@@ -403,6 +502,9 @@ export const SignUp = () => {
                     label="Name"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="name"
+                    value={formDataTrainer.name}
+                    onChange={handleChangeTrainer}
                   />
                 </Grid>
 
@@ -412,6 +514,9 @@ export const SignUp = () => {
                     label="Email id"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="email"
+                    value={formDataTrainer.email}
+                    onChange={handleChangeTrainer}
                   />
                 </Grid>
 
@@ -421,6 +526,9 @@ export const SignUp = () => {
                     label="Mobile"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="mobile"
+                    value={formDataTrainer.mobile}
+                    onChange={handleChangeTrainer}
                   />
                 </Grid>
 
@@ -428,40 +536,52 @@ export const SignUp = () => {
                   <div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       
-                      <DateField placeholder="DOB" style={{ width: "100%" }} />
+                      <DateField placeholder="DOB" style={{ width: "100%" }}
+                      value={formDataTrainer.dob}
+                      onChange={handleDateChangeTrainer}
+                      
+                      />
                      
                     </LocalizationProvider>
                   </div>
                 </Grid>
 
-              
+                <Grid item xs={12}>
+                  <div style={{padding:5,backgroundColor:"#F4EAE0",borderRadius:10,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div>
+                    <Typography style={{letterSpacing:1,fontWeight:"bold",color:"grey",fontSize:"14px"}}>Qualification</Typography>
+                    </div>
+                
+                    
+                  
+                  <div style={{textAlign:"right"}}>
+  <IconButton  onClick={handleAddFields} color="primary">
+            <AddIcon />
+          </IconButton>
+          {inputFields.length > 4 &&
+          <IconButton onClick={handleRemoveFields} color="error">
+            <RemoveIcon />
+          </IconButton>
+}
+  </div>
+  </div>
+                </Grid>
    
        
-      {inputFields.map((field,index) => (
-      
-          <Grid item xs={6}>
-         {
-          index % 4 === 0 ?
-          <div style={{ backgroundColor: '#FFFBF5', padding: '5px', marginBottom: '5px',width:"100%" }}>
-           {index % 4 === 0 && setCounter + Math.floor(index / 4)}. {/* Displaying numbering for each set of four input fields */}
-        </div>
-        :
-        <div style={{ backgroundColor: '#FFFBF5', padding: '5px', marginBottom: '5px' }}>
-         {/* Displaying numbering for each set of four input fields */}
-     </div>
-         }
-            
+                {inputFields.map((field, index) => (
+          <Grid item xs={6} key={field.id}>
+            {/* ... your numbering logic ... */}
 
             {field.label === 'Courses' ? (
-              <FormControl sx={{ width: '100%',marginTop:"20px" }}>
+              <FormControl sx={{ width: '100%' }}>
                 <InputLabel id={`demo-multiple-checkbox-label-${field.id}`}>
                   {field.label}
                 </InputLabel>
                 <Select
                   value={field.value}
-                  onChange={(e) => handleChange2(e, field.id)}
+                  onChange={(e) => handleChange2Trainer(e, field.id)}
                   input={<OutlinedInput label={field.label} />}
-                  renderValue={(selected) => selected.join(', ')}
+                  
                 >
                   {/* Replace 'course' with your actual array of course options */}
                   {course.map((name) => (
@@ -478,14 +598,13 @@ export const SignUp = () => {
                 variant="outlined"
                 style={{ width: '100%' }}
                 value={field.value}
-                onChange={(e) => handleChange2(e, field.id)}
+                onChange={(e) => handleChange3(e, field.id)}
               />
             )}
           </Grid>
-       
-      ))}
+        ))}
       
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
   <div style={{textAlign:"right"}}>
   <IconButton  onClick={handleAddFields} color="primary">
             <AddIcon />
@@ -497,7 +616,7 @@ export const SignUp = () => {
 }
   </div>
           
-        </Grid>
+        </Grid> */}
     
    
 
@@ -519,6 +638,9 @@ export const SignUp = () => {
                     label="City"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="city"
+                    value={formDataTrainer.city}
+                    onChange={handleChangeTrainer}
                   />
                 </Grid>
 
@@ -528,6 +650,9 @@ export const SignUp = () => {
                     label="Pincode"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="pincode"
+                    value={formDataTrainer.pincode}
+                    onChange={handleChangeTrainer}
                   />
                 </Grid>
 
@@ -537,6 +662,9 @@ export const SignUp = () => {
                     label="Country"
                     variant="outlined"
                     style={{ width: "100%" }}
+                    name="country"
+                    value={formDataTrainer.country}
+                    onChange={handleChangeTrainer}
                   />
                 </Grid>
 
@@ -554,6 +682,9 @@ export const SignUp = () => {
                       minRows={4}
                       maxRows={5}
                       placeholder="WorkExperience– 500 words"
+                      name="description"
+                      value={formDataTrainer.description}
+                      onChange={handleChangeTrainer}
                     />
                   
                 </Grid>
@@ -571,7 +702,7 @@ export const SignUp = () => {
                       variant="contained"
                       size="large"
                       style={{ backgroundColor: "#EE731B" }}
-                      onClick={handelContinue}
+                      onClick={handelTrainerContinue}
                     >
                       Continue
                     </Button>
