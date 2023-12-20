@@ -177,7 +177,8 @@ export const Login = () => {
         style={{
           flex: 2,
           overflowY: "auto",
-          padding: "40px"
+          padding: "40px",
+
           
         }}
       >
@@ -186,15 +187,16 @@ export const Login = () => {
             <Grid item xs={6}>
               <div
                 style={{
-                  height: "400px",
+                  height: "250px",
                   display: "flex",
-                  justifyContent: "left",
-                  alignItems: "center",
+                  justifyContent: "center",
+                  alignItems: "center"
+                
                 }}
               >
                 <p
                   style={{
-                    fontSize: "50px",
+                    fontSize: "34px",
                     letterSpacing: 3,
                     fontWeight: 500,
                   }}
@@ -204,9 +206,9 @@ export const Login = () => {
               </div>
             </Grid>
             <Grid item xs={6}>
-              <div style={{ textAlign: "right" }}>
+              <div style={{display:"flex",justifyContent:"center",alignItems:"center" }}>
                 <img
-                  style={{ height: "450px" }}
+                  style={{ height: "250px" }}
                   src="https://res.cloudinary.com/dgerdfai4/image/upload/f_auto/v1572073938/website/lp/hero-image-home.jpg"
                   alt="img"
                 />
@@ -215,12 +217,12 @@ export const Login = () => {
           </Grid>
         </div>
 
-        <div style={{ marginTop: "100px" }}>
+        <div style={{ marginTop: "60px" }}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <div style={{ textAlign: "left" }}>
+              <div style={{display:"flex",justifyContent:"center",alignItems:"center"  }}>
                 <img
-                  style={{ height: "450px" }}
+                  style={{ height: "250px" }}
                   src="https://res.cloudinary.com/dgerdfai4/image/upload/f_auto/v1572073938/website/lp/display-one.jpg"
                   alt="img"
                 />
@@ -229,15 +231,15 @@ export const Login = () => {
             <Grid item xs={6}>
               <div
                 style={{
-                  height: "400px",
+                  height: "230px",
                   display: "flex",
-                  justifyContent: "left",
+                  justifyContent: "center",
                   alignItems: "center",
                 }}
               >
                 <p
                   style={{
-                    fontSize: "50px",
+                    fontSize: "34px",
                     letterSpacing: 3,
                     fontWeight: 500,
                   }}
@@ -249,12 +251,12 @@ export const Login = () => {
           </Grid>
         </div>
 
-        <div style={{ marginTop: "100px" }}>
+        <div style={{ marginTop: "60px" }}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <div
                 style={{
-                  height: "400px",
+                  height: "250px",
                   display: "flex",
                   justifyContent: "left",
                   alignItems: "center",
@@ -262,7 +264,7 @@ export const Login = () => {
               >
                 <p
                   style={{
-                    fontSize: "50px",
+                    fontSize: "34px",
                     letterSpacing: 3,
                     fontWeight: 500,
                   }}
@@ -272,9 +274,9 @@ export const Login = () => {
               </div>
             </Grid>
             <Grid item xs={6}>
-              <div style={{ textAlign: "right" }}>
+              <div style={{display:"flex",justifyContent:"center",alignItems:"center" }}>
                 <img
-                  style={{ height: "450px" }}
+                  style={{ height: "250px" }}
                   src="https://res.cloudinary.com/dgerdfai4/image/upload/f_auto/v1572073938/website/lp/display-two.jpg"
                   alt="img"
                 />
