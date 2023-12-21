@@ -20,7 +20,12 @@
   left: -10px !important;
   
 } */
-
+@media (max-width: 768px) {
+  /* Hide content on small screens */
+  #container1 {
+    display: none !important;
+  }
+}
 #imageContainer {
   cursor: pointer;
   border: 2px solid #ddd;

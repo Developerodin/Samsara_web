@@ -10,6 +10,7 @@ import {
 import Logo from "../assest/samsara-logo.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import "./Login.css"
 export const Login = () => {
   const navigation = useNavigate();
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -61,21 +62,16 @@ export const Login = () => {
   }
 
   useEffect(() => {
-    // Attach scroll event listener
-    window.addEventListener("scroll", handleScroll);
-
-    // Clean up the listener on component unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+  
   }, []);
   return (
-    <div style={{ display: "flex", height: "100vh",backgroundColor: "#fff", }}>
+    <div style={{ display: "flex",backgroundColor: "#fff",height:"100vh",width:"100vw" }}>
       {/* Left side - Login Form */}
       <div style={{ flex: 1, padding: "20px", backgroundColor: "#FFFBF5",
-       margin:`${!isMobile ? "30px" : "0px"}`,
+       margin:`${!isMobile ? "20px" : "0px"}`,
        borderRadius:`${!isMobile ? "50px" : "0px"}`,
-       boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"
+       boxShadow: "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
+      
      }}>
 
         <div
@@ -84,12 +80,16 @@ export const Login = () => {
             justifyContent: "center",
             alignItems: "center",
             height: "100%",
+         
+            width:"100%",
+          
           }}
         >
-          <div style={{ display: "block" }}>
-            <div style={{ marginTop: "-100px", textAlign: "center" }}>
-              <img src={Logo} alt="img" />
+          <div style={{width:"90%"  }}>
+            <div style={{ textAlign: "center"}}>
+              <img src={Logo}   alt="img" />
             </div>
+
             <div
               style={{
                 marginTop: "50px",
@@ -101,19 +101,19 @@ export const Login = () => {
               {showPass && (
                 <ArrowBackIcon
                   onClick={handelBack}
-                  style={{ marginRight: "10px" }}
+                  style={{ marginRight: "10px",fontSize:"21px",marginTop:"4px" }}
                 />
               )}
-              <h2>Login</h2>
+              <h2 style={{fontSize:"20px"}}>Login</h2>
             </div>
-
+           
             {!showPass && (
-              <div>
+              <div >
                 <TextField
                   id="outlined-basic"
                   label="Mobile Number"
                   variant="outlined"
-                  style={{ width: "400px" }}
+                  style={{width:'100%'}}
                   name="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleChange}
@@ -127,7 +127,7 @@ export const Login = () => {
                   id="outlined-basic"
                   label="OTP"
                   variant="outlined"
-                  style={{ width: "400px" }}
+                  style={{width:'100%'}}
                   name="otp"
                   value={formData.otp}
                   onChange={handleChange}
@@ -153,13 +153,15 @@ export const Login = () => {
                 Continue
               </Button>
             </div>
-
-            <div
+        
+            
+          </div>
+          <div
               style={{
                 textAlign: "center",
                 position: "absolute",
-                bottom: 40,
-                width: "400px",
+                bottom: 20,
+               
               }}
             >
               <p style={{ fontSize: 15, fontWeight: "bold", color: "grey" }}>
@@ -167,30 +169,37 @@ export const Login = () => {
                 <span style={{ color: "#EE731B", fontSize: 16,cursor:"pointer" }} onClick={handelSignUp}>Sign up</span>
               </p>
             </div>
-          </div>
         </div>
       </div>
 
       {/* Right side - Scrollable Content */}
-      {
-        !isMobile && <div
+      {/* {
+        !isMobile && */}
+         <div 
+         id="container1"
         style={{
           flex: 2,
-          overflowY: "auto",
-          padding: "40px",
-
+         
+          padding: "20px",
+        
+         display: "flex",
+         justifyContent:"center",
+         alignItems:"center"
           
         }}
       >
         <div>
+
+        <div >
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+          <Grid item xs={6}>
               <div
                 style={{
-                  height: "250px",
+                  
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
+                  height: "250px"
                 
                 }}
               >
@@ -205,7 +214,7 @@ export const Login = () => {
                 </p>
               </div>
             </Grid>
-            <Grid item xs={6}>
+          <Grid item xs={6}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center" }}>
                 <img
                   style={{ height: "250px" }}
@@ -214,12 +223,14 @@ export const Login = () => {
                 />
               </div>
             </Grid>
+            
+            
           </Grid>
         </div>
 
         <div style={{ marginTop: "60px" }}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+          <Grid item xs={6}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center"  }}>
                 <img
                   style={{ height: "250px" }}
@@ -228,13 +239,15 @@ export const Login = () => {
                 />
               </div>
             </Grid>
-            <Grid item xs={6}>
+
+          <Grid item xs={6}>
               <div
                 style={{
-                  height: "230px",
+                
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  height:"250px"
                 }}
               >
                 <p
@@ -248,18 +261,25 @@ export const Login = () => {
                 </p>
               </div>
             </Grid>
+            
+            
           </Grid>
         </div>
+
+       
+
+        
 
         <div style={{ marginTop: "60px" }}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <div
                 style={{
-                  height: "250px",
+                 
                   display: "flex",
-                  justifyContent: "left",
+                  justifyContent: "center",
                   alignItems: "center",
+                  height:"250px"
                 }}
               >
                 <p
@@ -285,8 +305,9 @@ export const Login = () => {
           </Grid>
         </div>
         {/* Add more content as needed */}
+        </div>
       </div>
-      }
+      {/* } */}
       
     </div>
   );

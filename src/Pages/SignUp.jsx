@@ -70,7 +70,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ paddingTop:2 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -107,11 +107,19 @@ export const SignUp = () => {
   const [inputFields, setInputFields] = useState([
     { id: 1, label: "College", value: "" },
     { id: 2, label: "Courses", value: "" },
-    { id: 3, label: "Duration", value: "" },
-    { id: 4, label: "Passing Year", value: "" },
-    { id: 5, label: "Additional therapy or courses", value: "" },
+    // { id: 3, label: "Duration", value: "" },
+    { id: 3, label: "Passing Year", value: "" },
+    // { id: 5, label: "Additional therapy or courses", value: "" },
+  ]);
+
+  const [inputFieldsAc, setInputFieldsAc] = useState([
+    { id: 1, label: "Additional therapy or courses", value: "" },
+    { id: 2, label: "Duration", value: "" },
+ 
+    
   ]);
   const [setCounter, setSetCounter] = useState(1);
+  const [setCounterAc, setSetCounterAc] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     sex: "",
@@ -145,17 +153,18 @@ export const SignUp = () => {
     Address: "",
    
   });
-const [selectedType,setSelectedType] = useState("Personal")
+  const [selectedType,setSelectedType] = useState("Personal")
   const [userimageFile1,setUserImageFile1] = useState(null)
   const [userimageFile2,setUserImageFile2] = useState(null)
   const [TeacherimageFile1,setTeacherImageFile1] = useState(null)
   const [TeacherimageFile2,setTeacherImageFile2] = useState(null)
-  const [imageuserSrc1, setImageuserSrc1] = useState(null);
-  const [imageuserSrc2, setImageuserSrc2] = useState(null);
-  const [imageSrc1, setImageSrc1] = useState(null);
-  const [imageSrc2, setImageSrc2] = useState(null);
+  const [isTCChecked, setTCChecked] = useState(false);
 
   const [value, setValue] = React.useState(0);
+
+  const handletermandconditionsCheck = () => {
+    setTCChecked(!isTCChecked);
+  };
 
   const handleChangetabs = (event, newValue) => {
     setValue(newValue);
@@ -231,23 +240,40 @@ const [selectedType,setSelectedType] = useState("Personal")
       ...prevFields,
       { id: prevFields.length + 1, label: "College", value: "" },
       { id: prevFields.length + 2, label: "Courses", value: [] },
-      { id: prevFields.length + 3, label: "Duration", value: "" },
-      { id: prevFields.length + 4, label: "Passing Year", value: "" },
-      {
-        id: prevFields.length + 5,
-        label: "Additional therapy or courses",
-        value: "",
-      },
+      // { id: prevFields.length + 3, label: "Duration", value: "" },
+      { id: prevFields.length + 3, label: "Passing Year", value: "" },
+      
     ]);
-    if ((inputFields.length + 1) % 5 === 0) {
+    if ((inputFields.length + 1) % 3 === 0) {
       setSetCounter((prevCounter) => prevCounter + 1);
     }
   };
 
   const handleRemoveFields = () => {
-    setInputFields((prevFields) => prevFields.slice(0, prevFields.length - 5));
-    if ((inputFields.length - 1) % 5 === 0) {
+    setInputFields((prevFields) => prevFields.slice(0, prevFields.length - 3));
+    if ((inputFields.length - 1) % 3 === 0) {
       setSetCounter((prevCounter) => prevCounter - 1);
+    }
+  };
+
+  const handleAddFieldsAc = () => {
+    setInputFieldsAc((prevFields) => [
+      ...prevFields,
+    
+      { id: prevFields.length + 1, label: "Additional therapy or courses", value: "" },
+      { id: prevFields.length + 2, label: "Duration", value: "" },
+      
+      
+    ]);
+    if ((inputFieldsAc.length + 1) % 2 === 0) {
+      setSetCounterAc((prevCounter) => prevCounter + 1);
+    }
+  };
+
+  const handleRemoveFieldsAc = () => {
+    setInputFieldsAc((prevFields) => prevFields.slice(0, prevFields.length - 2));
+    if ((inputFieldsAc.length - 1) % 2 === 0) {
+      setSetCounterAc((prevCounter) => prevCounter - 1);
     }
   };
   const handleScroll = () => {
@@ -267,6 +293,10 @@ const [selectedType,setSelectedType] = useState("Personal")
   };
 
   const handelContinue = () => {
+    if(!isTCChecked){
+      alert('Please accepts Terms & Conditions and Privacy Policy')
+      return
+    }
     if (selectedType === "Corporate" && (formData.companyName === "" || formData.corporateId === "")) {
       alert("Company Name and Corporate ID are required for Corporate type.");
       return;
@@ -300,7 +330,7 @@ const [selectedType,setSelectedType] = useState("Personal")
       "password": "",
       "mobile":formData.mobile,
       "dob": formData.dob,
-      "images": [userimageFile1, userimageFile2],
+      "images": [userimageFile1],
       "Address":formData.Address,
       "city":formData.city,
       "pincode":formData.pincode,
@@ -350,6 +380,11 @@ const [selectedType,setSelectedType] = useState("Personal")
       });
   };
   const handelTrainerContinue = () => {
+    if(!isTCChecked){
+      alert('Please accepts Terms & Conditions and Privacy Policy')
+      return
+    }
+
     for (const key in formDataTrainer) {
       if (formDataTrainer[key] === "") {
         alert(`${key} is required.`);
@@ -374,7 +409,9 @@ formData.append('city', formDataTrainer.city);
 formData.append('pincode', formDataTrainer.pincode);
 formData.append('country', formDataTrainer.country);
 const qualificationData = JSON.stringify(inputFields);
+const additional_courses = JSON.stringify(inputFieldsAc);
 formData.append('qualification', qualificationData);
+formData.append('additional_courses', additional_courses);
 const ImageData=[TeacherimageFile1,TeacherimageFile2]
 ImageData.forEach((image, index) => {
   formData.append('images', image);
@@ -515,9 +552,9 @@ axios.post(`${Base_url}teacher_signup`, formData)
       <div
         style={{
           flex: 1,
-          padding: "20px",
+          padding: "15px",
           // backgroundColor: "#FFFBF5",
-          margin: `${!isMobile ? "30px" : "0px"}`,
+          margin: `${!isMobile ? "20px" : "0px"}`,
           borderRadius: `${!isMobile ? "50px" : "0px"}`,
           // boxShadow:
           //   "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
@@ -529,7 +566,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
             <h2>Sign up</h2>
           </div>
 
-          <div style={{ display: "flex" }}>
+          <div style={{display:"flex" }}>
 
           <Accordion>
         <AccordionSummary
@@ -540,7 +577,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
           <Typography>{selectedType}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <Button
+          <div style={{display:"flex",justifyContent:"space-around",alignItems:"center"}}>
+          <Button
               variant="outlined"
               size="small"
               color={PersonalSelected ? "warning" : "success"}
@@ -553,7 +591,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
               variant="outlined"
               size="small"
               color={CorporateSelected ? "warning" : "success"}
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "10px" }}
               onClick={handelCorporateSelected}
             >
               Corporate
@@ -562,11 +600,13 @@ axios.post(`${Base_url}teacher_signup`, formData)
               variant="outlined"
               size="small"
               color={TrainerSelected ? "warning" : "success"}
-              style={{ marginLeft: "30px" }}
+              style={{ marginLeft: "10px" }}
               onClick={handelTrainerSelected}
             >
               Trainer
             </Button>
+          </div>
+        
         </AccordionDetails>
       </Accordion>
       
@@ -590,7 +630,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
         >
           <Tab label="Details" {...a11yProps(0)}  style={{backgroundColor:`${value === 0 ? "#EE731B" : "#fff"}`,marginRight:"10px",borderRadius:"10px",marginBottom:"10px"}}/>
           <Tab label="Address" {...a11yProps(1)} style={{backgroundColor:`${value === 1 ? "#EE731B" : "#fff"}`,marginRight:"10px",borderRadius:"10px",marginBottom:"10px"}} />
-          <Tab label="Questions" {...a11yProps(2)}  style={{backgroundColor:`${value === 2 ? "#EE731B" : "#fff"}`,marginRight:"10px",borderRadius:"10px",marginBottom:"10px"}}/>
+          <Tab label="Yoga Information" {...a11yProps(2)}  style={{backgroundColor:`${value === 2 ? "#EE731B" : "#fff"}`,marginRight:"10px",borderRadius:"10px",marginBottom:"10px"}}/>
         </Tabs>
         </ThemeProvider>
       </Box>
@@ -600,33 +640,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
       
                   </Grid>
           
-              {CorporateSelected && (
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-basic"
-                      label="Company Name"
-                      variant="outlined"
-                      style={{ width: "100%" }}
-                      name="companyName"
-                      value={formData.companyName}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                )}
-                {CorporateSelected && (
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-basic"
-                      label="Corporate Id"
-                      variant="outlined"
-                      style={{ width: "100%" }}
-                      name="corporateId"
-                      value={formData.corporateId}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                )}
-                <Grid item xs={6}>
+             
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Name"
@@ -644,7 +659,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     // }}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Gender"
@@ -655,8 +670,34 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     onChange={handleChange}
                   />
                 </Grid>
+                {CorporateSelected && (
+                  <Grid item xs={12} sm={6} md={6}>
+                    <TextField
+                      id="outlined-basic"
+                      label="Company Name"
+                      variant="outlined"
+                      style={{ width: "100%" }}
+                      name="companyName"
+                      value={formData.companyName}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                )}
+                {CorporateSelected && (
+                  <Grid item xs={12} sm={6} md={6}>
+                    <TextField
+                      id="outlined-basic"
+                      label="Employee Id"
+                      variant="outlined"
+                      style={{ width: "100%" }}
+                      name="corporateId"
+                      value={formData.corporateId}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                )}
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Mobile"
@@ -668,7 +709,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Email"
@@ -681,7 +722,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 </Grid>
                 
 
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={4} md={4}>
                   <div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DateField
@@ -695,7 +736,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   </div>
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={4} md={4}>
                   <TextField
                     id="outlined-basic"
                     label="Height"
@@ -706,7 +747,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     onChange={handleChange}
                   />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={4} md={4}>
                   <TextField
                     id="outlined-basic"
                     label="Weight"
@@ -717,35 +758,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     onChange={handleChange}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <div>
-                    <FormControl sx={{ width: "100%" }}>
-                      <InputLabel id="demo-multiple-checkbox-label">
-                        Health issues
-                      </InputLabel>
-                      <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        value={formData.healthIssues}
-                        onChange={handleChange2}
-                        input={<OutlinedInput label="Tag" />}
-                        renderValue={(selected) => selected.join(", ")}
-                        MenuProps={MenuProps}
-                        sx={{ overflowX: "hidden !important", width: "100%",overflowY: "hidden !important"}}
-                      >
-                        {names.map((name) => (
-                          <MenuItem key={name} value={name}>
-                            <Checkbox
-                              checked={formData.healthIssues.indexOf(name) > -1}
-                            />
-                            <ListItemText primary={name} />
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </Grid>
+               
               
                 <Grid item xs={12}>
                 <div style={{marginBottom:"20px"}}>
@@ -786,30 +799,6 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       <TextField  type='file'   variant="outlined" onChange={handleFileChange}  />
         
                     </div>
-
-                    <div>
-                      {
-                        userimageFile2 && <div style={{display: "flex", alignItems: "center",justifyContent:"center" }}>
-                        <div
-                          style={{
-                            width: "150px",
-                            height: "150px",
-                            border: "1px solid #ddd",
-                            background: `url(${URL.createObjectURL(userimageFile2)}) center/cover no-repeat`,
-                            cursor: "pointer",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                          
-                        >
-                         
-                        </div>
-                        </div>
-                      }
-                    
-                      <TextField  type='file'   variant="outlined" onChange={handleFileChange2}  />
-                    </div>
                   </div>
                 </Grid>
                 <Grid item xs={12}>
@@ -841,7 +830,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 
 
                
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                   <TextField
                     id="outlined-basic"
                     label="Resident permanent address:"
@@ -852,7 +841,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     onChange={handleChange}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                   <TextField
                     id="outlined-basic"
                     label="City"
@@ -863,7 +852,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     onChange={handleChange}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                   <TextField
                     id="outlined-basic"
                     label="Pincode"
@@ -875,7 +864,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                   <TextField
                     id="outlined-basic"
                     label="Country"
@@ -923,13 +912,60 @@ axios.post(`${Base_url}teacher_signup`, formData)
       <CustomTabPanel value={value} index={2}>
         <Grid container spacing={3}>
             
-          
+        <Grid item xs={12}>
+                  <div>
+                    <FormControl sx={{ width: "100%" }}>
+                      <InputLabel id="demo-multiple-checkbox-label">
+                        Health issues
+                      </InputLabel>
+                      <Select
+                        labelId="demo-multiple-checkbox-label"
+                        id="demo-multiple-checkbox"
+                        multiple
+                        value={formData.healthIssues}
+                        onChange={handleChange2}
+                        input={<OutlinedInput label="Tag" />}
+                        renderValue={(selected) => selected.join(", ")}
+                        MenuProps={MenuProps}
+                        sx={{ overflowX: "hidden !important", width: "100%",overflowY: "hidden !important"}}
+                      >
+                        {names.map((name) => (
+                          <MenuItem key={name} value={name}>
+                            <Checkbox
+                              checked={formData.healthIssues.indexOf(name) > -1}
+                            />
+                            <ListItemText primary={name} />
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <div>
+                    <TextareaAutosize
+                      style={{
+                        width: `${!isMobile ? "98%" : "93%"}`,
+                        // backgroundColor: "#FFFBF5",
+                        padding: 10,
+                      }}
+                      aria-label="minimum height"
+                      minRows={4}
+                      maxRows={5}
+                      placeholder="Describe here"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </Grid>
 
                 <Grid item xs={12}>
                   <div>
                     <TextField
                       id="outlined-basic"
-                      label="Prior yoga experience "
+                      label="Prior yoga experience ? "
                       variant="outlined"
                       style={{ width: "100%" }}
                       name="PriorExperience"
@@ -952,26 +988,23 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     />
                   </div>
                 </Grid>
-               
 
                 <Grid item xs={12}>
-                  <div>
-                    <TextareaAutosize
-                      style={{
-                        width: `${!isMobile ? "98%" : "93%"}`,
-                        // backgroundColor: "#FFFBF5",
-                        padding: 10,
-                      }}
-                      aria-label="minimum height"
-                      minRows={4}
-                      maxRows={5}
-                      placeholder="Describe here"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                    />
-                  </div>
+                <div style={{display:"flex",justifyContent:"left",alignItems:"center"}}>
+      <Checkbox
+        checked={isTCChecked}
+        onChange={handletermandconditionsCheck}
+        inputProps={{ 'aria-label': 'Checkbox demo' }}
+      />
+      <p style={{fontSize:"15px"}}>By creating an account, you agree to Samsara Wellness
+<a href="#" style={{color:"blue",marginLeft:"5px",marginRight:"5px",textDecoration:"none"}}>Terms & Conditions</a>
+ and 
+ <a href="#" style={{color:"blue",marginLeft:"5px",marginRight:"5px",textDecoration:"none"}}>Privacy Policy</a></p>
+    </div>
                 </Grid>
+               
+
+                
 
                 
 
@@ -1036,7 +1069,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
       </Box>
       <CustomTabPanel value={value} index={0}>
       <Grid container spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Name"
@@ -1048,7 +1081,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Email"
@@ -1060,7 +1093,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Mobile"
@@ -1072,7 +1105,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DateField
@@ -1085,7 +1118,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   </div>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Resident permanent Address:"
@@ -1097,7 +1130,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
              
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="City"
@@ -1109,7 +1142,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Pincode"
@@ -1121,7 +1154,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Country"
@@ -1222,7 +1255,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       <IconButton onClick={handleAddFields} color="primary">
                         <AddIcon />
                       </IconButton>
-                      {inputFields.length > 5 && (
+                      {inputFields.length > 4 && (
                         <IconButton onClick={handleRemoveFields} color="error">
                           <RemoveIcon />
                         </IconButton>
@@ -1232,17 +1265,17 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 </Grid>
 
                 {inputFields.map((field, index) => (
-                  <Grid item xs={field.id % 5 === 0 ? 12 : 6} key={field.id}>
+                  <Grid item xs={12} sm={12} md={4} key={field.id}>
                     {/* ... your numbering logic ... */}
-                    {index % 5 === 0 ? (
+                    {index % 3 === 0 ? (
                       <div
                         style={{
                           padding: "5px",
                           marginBottom: "5px",
-                          width: "100%",
+                          width: "100%"
                         }}
                       >
-                        {index % 5 === 0 && setCounter + Math.floor(index / 5)}.{" "}
+                        {index % 3 === 0 && setCounter + Math.floor(index / 3)}.{" "}
                         {/* Displaying numbering for each set of four input fields */}
                       </div>
                     ) : (
@@ -1251,7 +1284,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       </div>
                     )}
                     {field.label === "Courses" ? (
-                      <FormControl sx={{ width: "100%", marginTop: "21px" }}>
+                      <FormControl sx={{ width: "100%", marginTop: "24px" }}>
                         <InputLabel
                           id={`demo-multiple-checkbox-label-${field.id}`}
                         >
@@ -1276,11 +1309,82 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         id={`outlined-basic-${field.id}`}
                         label={field.label}
                         variant="outlined"
-                        style={{ width: "100%" }}
+                        style={{ width: "100%",marginTop:`${field.label === "Passing Year" ? "24px" : "0px"}` }}
                         value={field.value}
                         onChange={(e) => handleChange3(e, field.id)}
                       />
                     )}
+                  </Grid>
+                ))}
+
+
+            <Grid item xs={12}>
+                  <div
+                    style={{
+                      padding: 5,
+                      // backgroundColor: "#F4EAE0",
+                      borderRadius: 10,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <div>
+                      <Typography
+                        style={{
+                          letterSpacing: 1,
+                          fontWeight: "bold",
+                          color: "grey",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Additional Courses
+                      </Typography>
+                    </div>
+
+                    <div style={{ textAlign: "right" }}>
+                      <IconButton onClick={handleAddFieldsAc} color="primary">
+                        <AddIcon />
+                      </IconButton>
+                      {inputFieldsAc.length > 2 && (
+                        <IconButton onClick={handleRemoveFieldsAc} color="error">
+                          <RemoveIcon />
+                        </IconButton>
+                      )}
+                    </div>
+                  </div>
+                </Grid>
+
+                {inputFieldsAc.map((field, index) => (
+                  <Grid item xs={12} sm={6} md={4} key={field.id}>
+                    {/* ... your numbering logic ... */}
+                    {index % 2 === 0 ? (
+                      <div
+                        style={{
+                          padding: "5px",
+                          marginBottom: "5px",
+                          width: "100%"
+                        }}
+                      >
+                        {index % 2 === 0 && setCounterAc + Math.floor(index / 2)}.{" "}
+                        {/* Displaying numbering for each set of four input fields */}
+                      </div>
+                    ) : (
+                      <div style={{ padding: "5px", marginBottom: "5px" }}>
+                        {/* Displaying numbering for each set of four input fields */}
+                      </div>
+                    )}
+                   
+                      <TextField
+                        id={`outlined-basic-${field.id}`}
+                        label={field.label}
+                        variant="outlined"
+                        style={{ width: "100%",marginTop:`${field.label === "Duration" ? "24px" : "0px"}` }}
+                        value={field.value}
+                        onChange={(e) => handleChange3(e, field.id)}
+                      />
+                  
                   </Grid>
                 ))}
 
@@ -1331,7 +1435,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     aria-label="minimum height"
                     minRows={4}
                     maxRows={5}
-                    placeholder="Work Experience– 500 words"
+                    placeholder="Work Experience – 500 words"
                     name="description"
                     value={formDataTrainer.description}
                     onChange={handleChangeTrainer}
@@ -1339,7 +1443,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 </Grid>
 
                 <Grid item xs={12}>
-                <div style={{marginBottom:"20px"}}>
+                <div style={{marginBottom:"20px",marginTop:"20px"}}>
                       <Typography
                         style={{
                           letterSpacing: 1,
@@ -1405,6 +1509,20 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 </Grid>
 
                 <Grid item xs={12}>
+                <div style={{display:"flex",justifyContent:"left",alignItems:"center"}}>
+      <Checkbox
+        checked={isTCChecked}
+        onChange={handletermandconditionsCheck}
+        inputProps={{ 'aria-label': 'Checkbox demo' }}
+      />
+      <p style={{fontSize:"15px"}}>By creating an account, you agree to Samsara Wellness
+<a href="#" style={{color:"blue",marginLeft:"5px",marginRight:"5px",textDecoration:"none"}}>Terms & Conditions</a>
+ and 
+ <a href="#" style={{color:"blue",marginLeft:"5px",marginRight:"5px",textDecoration:"none"}}>Privacy Policy</a></p>
+    </div>
+                </Grid>
+
+                <Grid item xs={12}>
                   <div
                     style={{
                       marginTop: "30px",
@@ -1432,6 +1550,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     </Button>
                   </div>
                 </Grid>
+
+                
               </Grid>
       </CustomTabPanel>
     </Box>
@@ -1443,6 +1563,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
             style={{
               textAlign: "center",
               marginTop: "70px",
+             
             }}
           >
             <p style={{ fontSize: 15, fontWeight: "bold", color: "grey" }}>
@@ -1458,10 +1579,12 @@ axios.post(`${Base_url}teacher_signup`, formData)
         </div>
       </div>
 
-      {!isMobile && (
+      
         <div
+        id="container1"
           style={{
-            flex: 0.5,
+            flex: 1,
+            
           }}
         >
           <div>
@@ -1484,7 +1607,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
           </div>
           {/* Add more content as needed */}
         </div>
-      )}
+    
     </div>
 
   );
