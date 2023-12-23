@@ -5,6 +5,7 @@ import {SignUp} from "./Pages/SignUp"
 import {Login} from "./Pages/Login"
 import {Articles} from "./Pages/Articles"
 import {Pricing} from "./Pages/Pricing"
+import { ConformationPage } from './Pages/ConformationPage';
 function App() {
   return (
     <div className="App">
@@ -16,6 +17,7 @@ function App() {
           <Route path='/login' exact element={ <Login/>} />
           <Route path='/articles' exact element={ <Articles/>} />
           <Route path='/pricing' exact element={ <Pricing/>} />
+          <Route path='/conformation' exact element={ <ConformationPage/>} />
           
     </Routes>      
     </BrowserRouter>

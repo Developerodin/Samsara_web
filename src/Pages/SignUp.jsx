@@ -183,23 +183,35 @@ export const SignUp = () => {
   };
 
   const handleChange2 = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setFormData((prevData) => ({
-      ...prevData,
-      healthIssues: typeof value === "string" ? value.split(",") : value,
-    }));
+    const checkedName = event.target.value;
+
+    setFormData((prevFormData) => {
+      const updatedHealthIssues = prevFormData.healthIssues.includes(checkedName)
+        ? prevFormData.healthIssues.filter((name) => name !== checkedName)
+        : [...prevFormData.healthIssues, checkedName];
+
+      return {
+        ...prevFormData,
+        healthIssues: updatedHealthIssues,
+      };
+    });
   };
 
   const handleChangeTrainer3 = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setFormDatasetFormData((prevData) => ({
-      ...prevData,
-      Expertise: typeof value === "string" ? value.split(",") : value,
-    }));
+   
+
+    const checkedName = event.target.value;
+
+    setFormDatasetFormData((prevFormData) => {
+      const updatedExpertise = prevFormData.Expertise.includes(checkedName)
+        ? prevFormData.Expertise.filter((name) => name !== checkedName)
+        : [...prevFormData.Expertise, checkedName];
+
+      return {
+        ...prevFormData,
+        Expertise: updatedExpertise,
+      };
+    });
   };
 
   const handleDateChange = (date) => {
@@ -305,6 +317,7 @@ export const SignUp = () => {
   };
 
   const handelContinue = () => {
+   
     if(!isTCChecked){
       alert('Please accepts Terms & Conditions and Privacy Policy')
       return
@@ -384,8 +397,9 @@ export const SignUp = () => {
         console.log('User created successfully:', response.data);
         // Optionally, you can navigate to the login page or perform any other action
         // navigation("/login");
-        alert("User Account created successfully")
-        navigation("/login");
+        // alert("User Account created successfully")
+        // window.location.href = 'https://sansara-corporate-dashboard.vercel.app';
+        navigation("/conformation");
       })
       .catch((error) => {
         console.error('Error creating user:', error);
@@ -395,6 +409,7 @@ export const SignUp = () => {
   };
 
   const handelTrainerContinue = () => {
+  
     if(!isTCChecked){
       alert('Please accepts Terms & Conditions and Privacy Policy')
       return
@@ -406,13 +421,12 @@ export const SignUp = () => {
         return; // Stop the submission process if any field is empty
       }
     }
-    // navigation("/login");
-    // console.log("Data Trainer ===>", formDataTrainer);
+  
     console.log("Data of map inputs", inputFields);
-    // console.log("Data of images", imageSrc1,imageSrc2);
+   
     const formData = new FormData();
 
-// Append regular fields
+
 formData.append('name', formDataTrainer.name);
 formData.append('email', formDataTrainer.email);
 formData.append('password', formDataTrainer.password);
@@ -439,7 +453,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
         // Optionally, you can navigate to the login page or perform any other action
         // navigation("/login");
         alert("Trainer Account created successfully")
-        navigation("/login");
+        navigation("/conformation");
       })
       .catch((error) => {
         console.error('Error creating user:', error);
@@ -942,40 +956,36 @@ axios.post(`${Base_url}teacher_signup`, formData)
         <Grid container spacing={3}>
             
         <Grid item xs={12}>
-                  <div>
-                    <FormControl sx={{ width: "100%" }}>
-                      <InputLabel id="demo-multiple-checkbox-label">
-                        Health issues
-                      </InputLabel>
-                      <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        value={formData.healthIssues}
-                        onChange={handleChange2}
-                        input={<OutlinedInput label="Tag" />}
-                        renderValue={(selected) => selected.join(", ")}
-                        MenuProps={MenuProps}
-                        sx={{ overflowX: "hidden !important", width: "100%",overflowY: "hidden !important"}}
-                      >
-                        {names.map((name) => (
-                          <MenuItem key={name} value={name}>
-                            <Checkbox
-                              checked={formData.healthIssues.indexOf(name) > -1}
-                            />
-                            <ListItemText primary={name} />
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </Grid>
+      <div>
+        <Typography style={{fontSize:"16px"}}>Health Issues</Typography>
+        <FormControl sx={{ width: "100%" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "16px",
+            }}
+          >
+            {names.map((name) => (
+              <MenuItem key={name} value={name}>
+                <Checkbox
+                  checked={formData.healthIssues.includes(name)}
+                  onChange={handleChange2}
+                  value={name}
+                />
+                <ListItemText primary={name} />
+              </MenuItem>
+            ))}
+          </div>
+        </FormControl>
+      </div>
+    </Grid>
 
                 <Grid item xs={12}>
                   <div>
                     <TextareaAutosize
                       style={{
-                        width: `${!isMobile ? "98%" : "93%"}`,
+                        width: `${!isMobile ? "97%" : "93%"}`,
                         // backgroundColor: "#FFFBF5",
                         padding: 10,
                       }}
@@ -1242,7 +1252,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
 
       <CustomTabPanel value={value} index={1}>
       <Grid container spacing={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
                   <div>
                     <FormControl sx={{ width: "100%" }}>
                       <InputLabel id="demo-multiple-checkbox-label">
@@ -1272,7 +1282,35 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       </Select>
                     </FormControl>
                   </div>
-                </Grid>
+                </Grid> */}
+
+
+
+                <Grid item xs={12}>
+      <div>
+        <Typography style={{fontSize:"16px"}}>Teaching Expertise</Typography>
+        <FormControl sx={{ width: "100%" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "16px",
+            }}
+          >
+            {Expertise.map((name) => (
+              <MenuItem key={name} value={name}>
+                <Checkbox
+                  checked={formDataTrainer.Expertise.includes(name)}
+                  onChange={handleChangeTrainer3}
+                  value={name}
+                />
+                <ListItemText primary={name} />
+              </MenuItem>
+            ))}
+          </div>
+        </FormControl>
+      </div>
+    </Grid>
 
                 <Grid item xs={12}>
                   <div
@@ -1478,7 +1516,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     style={{
                       // backgroundColor: "#FFFBF5",
                       padding: 10,
-                      width: `${!isMobile ? "98%" : "93%"}`,
+                      width: `${!isMobile ? "97%" : "93%"}`,
                     }}
                     aria-label="minimum height"
                     minRows={4}
