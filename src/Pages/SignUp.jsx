@@ -42,6 +42,7 @@ import Tab from '@mui/material/Tab';
 import { ThemeProvider } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CircularProgress from '@mui/material/CircularProgress';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const orangeTheme = createTheme({
@@ -96,6 +97,8 @@ export const SignUp = () => {
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
+    const [loading, setLoading] = useState(false);
+    const [Teacherloading, setTeacherLoading] = useState(false);
   const [personName, setPersonName] = React.useState([]);
   const [visibleSection, setVisibleSection] = useState(1);
   const [showPass, setPass] = useState(false);
@@ -138,6 +141,7 @@ export const SignUp = () => {
     Address: "",
     howyouknowus: "",
     PriorExperience: "",
+    password:""
   });
 
   const [formDataTrainer, setFormDatasetFormData] = useState({
@@ -151,6 +155,7 @@ export const SignUp = () => {
     description: "",
     Expertise: [],
     Address: "",
+    password:""
    
   });
   const [selectedType,setSelectedType] = useState("Personal")
@@ -233,6 +238,13 @@ export const SignUp = () => {
       field.id === id ? { ...field, value: e.target.value } : field
     );
     setInputFields(updatedFields);
+  };
+
+  const handleChange3Ac = (e, id) => {
+    const updatedFields = inputFieldsAc.map((field) =>
+      field.id === id ? { ...field, value: e.target.value } : field
+    );
+    setInputFieldsAc(updatedFields);
   };
 
   const handleAddFields = () => {
@@ -327,7 +339,7 @@ export const SignUp = () => {
       "company_name":formData.companyName,
       "corporate_id":formData.corporateId,
       "email":formData.email,
-      "password": "",
+      "password":formData.password,
       "mobile":formData.mobile,
       "dob": formData.dob,
       "images": [userimageFile1],
@@ -365,20 +377,23 @@ export const SignUp = () => {
     formData1.append("howyouknowus", userData.howyouknowus);
     formData1.append("PriorExperience", userData.PriorExperience);
     formData1.append("description", userData.description);
-    
+    setLoading(true)
     axios.post(`${Base_url}student_signup`, formData1)
       .then((response) => {
+        setLoading(false)
         console.log('User created successfully:', response.data);
         // Optionally, you can navigate to the login page or perform any other action
         // navigation("/login");
+        alert("User Account created successfully")
         navigation("/login");
       })
       .catch((error) => {
         console.error('Error creating user:', error);
-        
-        alert("Refresh and try again");
+        setLoading(false)
+        alert("Error creating user Refresh and try again");
       });
   };
+
   const handelTrainerContinue = () => {
     if(!isTCChecked){
       alert('Please accepts Terms & Conditions and Privacy Policy')
@@ -416,16 +431,19 @@ const ImageData=[TeacherimageFile1,TeacherimageFile2]
 ImageData.forEach((image, index) => {
   formData.append('images', image);
 });
-
+setTeacherLoading(true)
 axios.post(`${Base_url}teacher_signup`, formData)
       .then((response) => {
+        setTeacherLoading(false)
         console.log('Teacher created successfully:', response.data);
         // Optionally, you can navigate to the login page or perform any other action
         // navigation("/login");
+        alert("Trainer Account created successfully")
         navigation("/login");
       })
       .catch((error) => {
         console.error('Error creating user:', error);
+        setTeacherLoading(false)
         alert("Refresh and try again");
       });
 
@@ -697,7 +715,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   </Grid>
                 )}
 
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid item xs={12} sm={4} md={4}>
                   <TextField
                     id="outlined-basic"
                     label="Mobile"
@@ -709,7 +727,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid item xs={12} sm={4} md={4}>
                   <TextField
                     id="outlined-basic"
                     label="Email"
@@ -717,6 +735,17 @@ axios.post(`${Base_url}teacher_signup`, formData)
                     style={{ width: "100%" }}
                     name="email"
                     value={formData.email}
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4} md={4}>
+                  <TextField
+                    id="outlined-basic"
+                    label="Password"
+                    variant="outlined"
+                    style={{ width: "100%" }}
+                    name="password"
+                    value={formData.password}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -1033,8 +1062,13 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       size="large"
                       style={{ backgroundColor: "#EE731B" }}
                       onClick={handelContinue}
+                      disabled={loading}
                     >
-                      Submit
+                         {loading ? (
+        <CircularProgress size={24} color="inherit" />
+      ) : (
+        'Submit'
+      )}
                     </Button>
                   </div>
                 </Grid>
@@ -1084,6 +1118,18 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
+                    label="Mobile"
+                    variant="outlined"
+                    style={{ width: "100%" }}
+                    name="mobile"
+                    value={formDataTrainer.mobile}
+                    onChange={handleChangeTrainer}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextField
+                    id="outlined-basic"
                     label="Email"
                     variant="outlined"
                     style={{ width: "100%" }}
@@ -1096,14 +1142,16 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
-                    label="Mobile"
+                    label="Password"
                     variant="outlined"
                     style={{ width: "100%" }}
-                    name="mobile"
-                    value={formDataTrainer.mobile}
+                    name="password"
+                    value={formDataTrainer.password}
                     onChange={handleChangeTrainer}
                   />
                 </Grid>
+
+                
 
                 <Grid item xs={12} sm={6} md={6}>
                   <div>
@@ -1130,7 +1178,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
              
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid item xs={12} sm={4} md={4}>
                   <TextField
                     id="outlined-basic"
                     label="City"
@@ -1142,7 +1190,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid item xs={12} sm={4} md={4}>
                   <TextField
                     id="outlined-basic"
                     label="Pincode"
@@ -1154,7 +1202,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid item xs={12} sm={4} md={4}>
                   <TextField
                     id="outlined-basic"
                     label="Country"
@@ -1382,7 +1430,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         variant="outlined"
                         style={{ width: "100%",marginTop:`${field.label === "Duration" ? "24px" : "0px"}` }}
                         value={field.value}
-                        onChange={(e) => handleChange3(e, field.id)}
+                        onChange={(e) => handleChange3Ac(e, field.id)}
                       />
                   
                   </Grid>
@@ -1545,8 +1593,13 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       size="large"
                       style={{ backgroundColor: "#EE731B" }}
                       onClick={handelTrainerContinue}
+                      disabled={Teacherloading}
                     >
-                      Submit
+                                   {Teacherloading ? (
+        <CircularProgress size={24} color="inherit" />
+      ) : (
+        'Submit'
+      )}
                     </Button>
                   </div>
                 </Grid>
