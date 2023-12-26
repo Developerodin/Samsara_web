@@ -442,9 +442,8 @@ const additional_courses = JSON.stringify(inputFieldsAc);
 formData.append('qualification', qualificationData);
 formData.append('additional_courses', additional_courses);
 const ImageData=[TeacherimageFile1,TeacherimageFile2]
-ImageData.forEach((image, index) => {
-  formData.append('images', image);
-});
+formData.append('images', TeacherimageFile1);
+formData.append('images', TeacherimageFile2);
 setTeacherLoading(true)
 axios.post(`${Base_url}teacher_signup`, formData)
       .then((response) => {
@@ -1443,7 +1442,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 </Grid>
 
                 {inputFieldsAc.map((field, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={field.id}>
+                  <Grid item xs={12} sm={6} md={6} key={field.id}>
                     {/* ... your numbering logic ... */}
                     {index % 2 === 0 ? (
                       <div
