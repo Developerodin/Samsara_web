@@ -180,7 +180,7 @@ export const Login = () => {
         style={{
           flex: 2,
          
-          padding: "20px",
+          padding: "10px",
         
          display: "flex",
          justifyContent:"center",
@@ -228,7 +228,7 @@ export const Login = () => {
           </Grid>
         </div>
 
-        <div style={{ marginTop: "60px" }}>
+        <div style={{ marginTop: "40px" }}>
           <Grid container spacing={2}>
           <Grid item xs={6}>
               <div style={{display:"flex",justifyContent:"center",alignItems:"center"  }}>
@@ -270,7 +270,7 @@ export const Login = () => {
 
         
 
-        <div style={{ marginTop: "60px" }}>
+        <div style={{ marginTop: "40px" }}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <div

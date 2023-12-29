@@ -467,7 +467,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
   };
 
   const handelLogin = () => {
-    navigation("/login");
+    // navigation("/login");
+    window.location.href = 'https://samsarawellness.in/';
   };
 
   const handelTrainerSelected = () => {
