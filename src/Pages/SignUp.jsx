@@ -116,9 +116,10 @@ export const SignUp = () => {
   ]);
 
   const [inputFieldsAc, setInputFieldsAc] = useState([
-    { id: 1, label: "Additional therapy or courses", value: "" },
-    { id: 2, label: "Duration", value: "" },
- 
+    { id: 1, label: "Course", value: "" },
+    { id: 2, label: "School Name", value: "" },
+    { id: 3, label: "Duration", value: "" },
+   
     
   ]);
   const [setCounter, setSetCounter] = useState(1);
@@ -155,7 +156,9 @@ export const SignUp = () => {
     description: "",
     Expertise: [],
     Address: "",
-    password:""
+    password:"",
+    gender:"",
+    teachingExperience:""
    
   });
   const [selectedType,setSelectedType] = useState("Personal")
@@ -283,20 +286,21 @@ export const SignUp = () => {
   const handleAddFieldsAc = () => {
     setInputFieldsAc((prevFields) => [
       ...prevFields,
-    
-      { id: prevFields.length + 1, label: "Additional therapy or courses", value: "" },
-      { id: prevFields.length + 2, label: "Duration", value: "" },
+      { id: prevFields.length + 1, label: "Course", value: "" },
+      { id: prevFields.length + 2, label: "School Name", value: "" },
+      { id: prevFields.length + 3, label: "Duration", value: "" },
+     
       
       
     ]);
-    if ((inputFieldsAc.length + 1) % 2 === 0) {
+    if ((inputFieldsAc.length + 1) % 3 === 0) {
       setSetCounterAc((prevCounter) => prevCounter + 1);
     }
   };
 
   const handleRemoveFieldsAc = () => {
-    setInputFieldsAc((prevFields) => prevFields.slice(0, prevFields.length - 2));
-    if ((inputFieldsAc.length - 1) % 2 === 0) {
+    setInputFieldsAc((prevFields) => prevFields.slice(0, prevFields.length - 3));
+    if ((inputFieldsAc.length - 1) % 3 === 0) {
       setSetCounterAc((prevCounter) => prevCounter - 1);
     }
   };
@@ -429,6 +433,7 @@ export const SignUp = () => {
 
 formData.append('name', formDataTrainer.name);
 formData.append('email', formDataTrainer.email);
+formData.append('gender', formDataTrainer.gender);
 formData.append('password', formDataTrainer.password);
 formData.append('mobile', formDataTrainer.mobile);
 formData.append('dob', formDataTrainer.dob);
@@ -441,6 +446,8 @@ const qualificationData = JSON.stringify(inputFields);
 const additional_courses = JSON.stringify(inputFieldsAc);
 formData.append('qualification', qualificationData);
 formData.append('additional_courses', additional_courses);
+formData.append('teachingExperience', formDataTrainer.teachingExperience);
+formData.append('description', formDataTrainer.description);
 const ImageData=[TeacherimageFile1,TeacherimageFile2]
 formData.append('images', TeacherimageFile1);
 formData.append('images', TeacherimageFile2);
@@ -519,7 +526,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
 
   const Expertise = [
     "Hatha",
-    "Vinyasa",
+    "Vinyasa Flow",
+    "Iyenger Yoga",
     "Power Yoga",
     "Ashtanga",
     "YIN",
@@ -529,6 +537,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
     "Kids Yoga",
     "Pre & Postnatal",
     "Mudra",
+    "Laughter Yoga",
+    "Sound Healing",
   ];
   const course = ["B.S.C", "M.S.C", "P.H.D"];
 
@@ -1128,6 +1138,31 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
+                    label="Sex"
+                    variant="outlined"
+                    style={{ width: "100%" }}
+                    name="gender"
+                    value={formDataTrainer.gender}
+                    onChange={handleChangeTrainer}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <div>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DateField
+                        placeholder="DOB"
+                        style={{ width: "100%" }}
+                        value={formDataTrainer.dob}
+                        onChange={handleDateChangeTrainer}
+                      />
+                    </LocalizationProvider>
+                  </div>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextField
+                    id="outlined-basic"
                     label="Mobile"
                     variant="outlined"
                     style={{ width: "100%" }}
@@ -1163,18 +1198,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
 
                 
 
-                <Grid item xs={12} sm={6} md={6}>
-                  <div>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DateField
-                        placeholder="DOB"
-                        style={{ width: "100%" }}
-                        value={formDataTrainer.dob}
-                        onChange={handleDateChangeTrainer}
-                      />
-                    </LocalizationProvider>
-                  </div>
-                </Grid>
+                
 
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
@@ -1188,7 +1212,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
              
-                <Grid item xs={12} sm={4} md={4}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="City"
@@ -1200,7 +1224,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={4}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Pincode"
@@ -1212,7 +1236,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={4} md={4}>
+                <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     id="outlined-basic"
                     label="Country"
@@ -1312,6 +1336,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
       </div>
     </Grid>
 
+               
                 <Grid item xs={12}>
                   <div
                     style={{
@@ -1433,7 +1458,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       <IconButton onClick={handleAddFieldsAc} color="primary">
                         <AddIcon />
                       </IconButton>
-                      {inputFieldsAc.length > 2 && (
+                      {inputFieldsAc.length > 3 && (
                         <IconButton onClick={handleRemoveFieldsAc} color="error">
                           <RemoveIcon />
                         </IconButton>
@@ -1443,9 +1468,9 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 </Grid>
 
                 {inputFieldsAc.map((field, index) => (
-                  <Grid item xs={12} sm={6} md={6} key={field.id}>
+                  <Grid item xs={12} sm={12} md={4} key={field.id}>
                     {/* ... your numbering logic ... */}
-                    {index % 2 === 0 ? (
+                    {index % 3 === 0 ? (
                       <div
                         style={{
                           padding: "5px",
@@ -1453,7 +1478,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                           width: "100%"
                         }}
                       >
-                        {index % 2 === 0 && setCounterAc + Math.floor(index / 2)}.{" "}
+                        {index % 3 === 0 && setCounterAc + Math.floor(index / 3)}.{" "}
                         {/* Displaying numbering for each set of four input fields */}
                       </div>
                     ) : (
@@ -1466,7 +1491,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         id={`outlined-basic-${field.id}`}
                         label={field.label}
                         variant="outlined"
-                        style={{ width: "100%",marginTop:`${field.label === "Duration" ? "24px" : "0px"}` }}
+                        style={{ width: "100%",marginTop:`${field.label === "Duration" || field.label === "School Name" ? "24px" : "0px"}` }}
                         value={field.value}
                         onChange={(e) => handleChange3Ac(e, field.id)}
                       />
@@ -1510,6 +1535,17 @@ axios.post(`${Base_url}teacher_signup`, formData)
       <CustomTabPanel value={value} index={2}>
       <Grid container spacing={2}>
              
+      <Grid item xs={12}>
+                  <TextField
+                    id="outlined-basic"
+                    label="Teaching Experience In Years"
+                    variant="outlined"
+                    style={{ width: "100%" }}
+                    name="teachingExperience"
+                    value={formDataTrainer.teachingExperience}
+                    onChange={handleChangeTrainer}
+                  />
+                </Grid>
 
                 <Grid item xs={12}>
                   <TextareaAutosize
