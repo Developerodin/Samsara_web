@@ -118,7 +118,7 @@ export const SignUp = () => {
   const [inputFieldsAc, setInputFieldsAc] = useState([
     { id: 1, label: "Course", value: "" },
     { id: 2, label: "School Name", value: "" },
-    { id: 3, label: "Duration", value: "" },
+    { id: 3, label: "Passing Year", value: "" },
    
     
   ]);
@@ -288,7 +288,7 @@ export const SignUp = () => {
       ...prevFields,
       { id: prevFields.length + 1, label: "Course", value: "" },
       { id: prevFields.length + 2, label: "School Name", value: "" },
-      { id: prevFields.length + 3, label: "Duration", value: "" },
+      { id: prevFields.length + 3, label: "Passing Year", value: "" },
      
       
       
@@ -1491,7 +1491,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         id={`outlined-basic-${field.id}`}
                         label={field.label}
                         variant="outlined"
-                        style={{ width: "100%",marginTop:`${field.label === "Duration" || field.label === "School Name" ? "24px" : "0px"}` }}
+                        style={{ width: "100%",marginTop:`${field.label === "Passing Year" || field.label === "School Name" ? "24px" : "0px"}` }}
                         value={field.value}
                         onChange={(e) => handleChange3Ac(e, field.id)}
                       />
