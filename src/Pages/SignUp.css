@@ -1,25 +1,43 @@
-/* .MuiOutlinedInput-notchedOutline {
-    padding: 0!important;
-    border-width: 0 0 1px 0 !important; 
-    border-color: #94928e !important;
+.MuiOutlinedInput-notchedOutline {
+    padding: 3!important;
+
+    border-color: #814151 !important;
+    border-radius: 15px !important;
   }
   
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-    padding: 21px 0px  4px !important;
+    /* padding: 21px 0px  4px !important; */
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  color: #fff !important;
 }
 
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 21px 0px 4px !important;
 }
 
-.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root {
-  margin-left: -14px !important;
+#outlined-basic-label{
+  color:#fff !important;
+}
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  color: #fff !important;
+}
+.css-10hburv-MuiTypography-root {
+ color: #fff !important;
+ margin-left: 10px !important;
+ 
+}
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background: grey !important;
 }
 
-.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-  left: -10px !important;
+#noborder{
+  border: 0.5px dashed #fff ;
+  color: #fff;
   
-} */
+  padding:12px;
+}
 @media (max-width: 768px) {
   /* Hide content on small screens */
   #container1 {
