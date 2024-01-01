@@ -17,7 +17,7 @@ import {
   IconButton,
 } from "@mui/material";
 import Logo from "../assest/samsara-logo.png";
-import Bg1 from "../assest/bg-sm-1.jpg";
+import Bg1 from "../assest/bg-sm-7.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
