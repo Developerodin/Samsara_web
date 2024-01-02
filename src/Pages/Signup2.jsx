@@ -17,6 +17,7 @@ import {
   IconButton,
 } from "@mui/material";
 import Logo from "../assest/samsara-logo.png";
+import Bg1 from "../assest/bg-sm-5.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -27,7 +28,7 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { createTheme } from "@mui/material/styles";
-import "./SignUp.css";
+import "./SignUp2.css";
 import dayjs from "dayjs";
 import axios from "axios";
 import { Base_url } from "../Config/BaseUrl";
@@ -390,7 +391,10 @@ export const SignUp2 = () => {
     formData1.append("country", userData.country);
     formData1.append("height", userData.height);
     formData1.append("weight", userData.weight);
-    formData1.append("health_issues", userData.health_issues);
+    userData.health_issues.forEach((el, index) => {
+      formData1.append('health_issues', el);
+    });
+    
     formData1.append("howyouknowus", userData.howyouknowus);
     formData1.append("PriorExperience", userData.PriorExperience);
     formData1.append("description", userData.description);
@@ -438,7 +442,10 @@ formData.append('password', formDataTrainer.password);
 formData.append('mobile', formDataTrainer.mobile);
 formData.append('dob', formDataTrainer.dob);
 formData.append('Address', formDataTrainer.Address);
-formData.append('expertise', formDataTrainer.Expertise);
+formDataTrainer.Expertise.forEach((el, index) => {
+  formData.append('expertise', el);
+});
+
 formData.append('city', formDataTrainer.city);
 formData.append('pincode', formDataTrainer.pincode);
 formData.append('country', formDataTrainer.country);
@@ -589,23 +596,36 @@ axios.post(`${Base_url}teacher_signup`, formData)
     };
   }, []);
   return (
-    <div style={{ display: "flex", backgroundColor: "#fff" }}>
+    <div 
+    style={{
+      display: 'flex',
+      backgroundColor: '#FFEFE8',
+      backgroundImage: `url(${Bg1})`,
+      backgroundSize: 'cover', // You can adjust the background size as needed
+      backgroundPosition: 'center', // You can adjust the background position as needed
+      justifyContent: 'center',
+      alignItems:"center",
+      height:"100vh"
+    }}
+    >
       
       <div
         style={{
-          flex: 1,
+        
           padding: "15px",
-          // backgroundColor: "#FFFBF5",
+          backgroundColor: "#fff",
           margin: `${!isMobile ? "20px" : "0px"}`,
           borderRadius: `${!isMobile ? "50px" : "0px"}`,
+          width:`${!isMobile ? "50%" : "100%"}`
           // boxShadow:
           //   "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
+           
         }}
       >
-        <div style={{ height: "100%" }}>
+        <div style={{height:"100%"}}>
        
           <div style={{ textAlign: "left" }}>
-            <h2>Sign up</h2>
+            <h2 >Sign up</h2>
           </div>
 
           <div style={{display:"flex" }}>
@@ -664,7 +684,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
             
             }}>
                       <Box sx={{ width: '100%' }}>
-      <Box sx={{ display:"flex",justifyContent:"space-between",alignItems:"center" }}>
+      <Box sx={{ display:"flex",justifyContent:"center",alignItems:"center" }}>
       <ThemeProvider theme={orangeTheme}>
         <Tabs value={value} onChange={handleChangetabs} aria-label="basic tabs example" textColor="primary"
         indicatorColor="primary"
@@ -819,7 +839,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         style={{
                           letterSpacing: 1,
                           fontWeight: "bold",
-                          color: "grey",
+                         
                           fontSize: "14px",
                         }}
                       >
@@ -849,7 +869,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       }
                       
                       
-                      <TextField  type='file'   variant="outlined" onChange={handleFileChange}  />
+                      <input  type='file' onChange={handleFileChange} id="noborder" />
         
                     </div>
                   </div>
@@ -977,11 +997,12 @@ axios.post(`${Base_url}teacher_signup`, formData)
             }}
           >
             {names.map((name) => (
-              <MenuItem key={name} value={name}>
+              <MenuItem key={name}  value={name}>
                 <Checkbox
                   checked={formData.healthIssues.includes(name)}
                   onChange={handleChange2}
                   value={name}
+                  
                 />
                 <ListItemText primary={name} />
               </MenuItem>
@@ -993,16 +1014,13 @@ axios.post(`${Base_url}teacher_signup`, formData)
 
                 <Grid item xs={12}>
                   <div>
-                    <TextareaAutosize
+                    <TextField
                       style={{
-                        width: `${!isMobile ? "97%" : "93%"}`,
-                        // backgroundColor: "#FFFBF5",
-                        padding: 10,
+                        width: `100%`,
                       }}
-                      aria-label="minimum height"
-                      minRows={4}
-                      maxRows={5}
-                      placeholder="Describe here"
+                     
+                      label="Description "
+                     
                       name="description"
                       value={formData.description}
                       onChange={handleChange}
@@ -1044,6 +1062,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
         checked={isTCChecked}
         onChange={handletermandconditionsCheck}
         inputProps={{ 'aria-label': 'Checkbox demo' }}
+        
       />
       <p style={{fontSize:"15px"}}>By creating an account, you agree to Samsara Wellness
 <a href="#" style={{color:"blue",marginLeft:"5px",marginRight:"5px",textDecoration:"none"}}>Terms & Conditions</a>
@@ -1322,11 +1341,12 @@ axios.post(`${Base_url}teacher_signup`, formData)
             }}
           >
             {Expertise.map((name) => (
-              <MenuItem key={name} value={name}>
+              <MenuItem key={name}  value={name}>
                 <Checkbox
                   checked={formDataTrainer.Expertise.includes(name)}
                   onChange={handleChangeTrainer3}
                   value={name}
+                  
                 />
                 <ListItemText primary={name} />
               </MenuItem>
@@ -1354,7 +1374,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         style={{
                           letterSpacing: 1,
                           fontWeight: "bold",
-                          color: "grey",
+                        
                           fontSize: "14px",
                         }}
                       >
@@ -1383,7 +1403,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         style={{
                           padding: "5px",
                           marginBottom: "5px",
-                          width: "100%"
+                          width: "100%",
+                        
                         }}
                       >
                         {index % 3 === 0 && setCounter + Math.floor(index / 3)}.{" "}
@@ -1409,8 +1430,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         >
                           {/* Replace 'course' with your actual array of course options */}
                           {course.map((name) => (
-                            <MenuItem key={name} value={name}>
-                              <ListItemText primary={name} />
+                            <MenuItem key={name}  value={name} >
+                              <ListItemText color="black"  primary={name} />
                             </MenuItem>
                           ))}
                         </Select>
@@ -1446,7 +1467,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         style={{
                           letterSpacing: 1,
                           fontWeight: "bold",
-                          color: "grey",
+                       
                           fontSize: "14px",
                         }}
                       >
@@ -1475,7 +1496,8 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         style={{
                           padding: "5px",
                           marginBottom: "5px",
-                          width: "100%"
+                          width: "100%",
+                        
                         }}
                       >
                         {index % 3 === 0 && setCounterAc + Math.floor(index / 3)}.{" "}
@@ -1550,9 +1572,11 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 <Grid item xs={12}>
                   <TextareaAutosize
                     style={{
-                      // backgroundColor: "#FFFBF5",
+                      background:"transparent",
                       padding: 10,
                       width: `${!isMobile ? "97%" : "93%"}`,
+                    
+                      borderColor:"#814151"
                     }}
                     aria-label="minimum height"
                     minRows={4}
@@ -1570,7 +1594,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         style={{
                           letterSpacing: 1,
                           fontWeight: "bold",
-                          color: "grey",
+                       
                           fontSize: "14px",
                         }}
                       >
@@ -1600,7 +1624,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                       }
                       
                       
-                      <TextField  type='file'   variant="outlined" onChange={handleFileChange3}  />
+                      <input  type='file'    onChange={handleFileChange3} id="noborder" />
         
                     </div>
 
@@ -1625,7 +1649,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
                         </div>
                       }
                     
-                      <TextField  type='file'   variant="outlined" onChange={handleFileChange4}  />
+                      <input  type='file'    onChange={handleFileChange4} id="noborder" />
                     </div>
                   </div>
                 </Grid>
@@ -1636,6 +1660,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
         checked={isTCChecked}
         onChange={handletermandconditionsCheck}
         inputProps={{ 'aria-label': 'Checkbox demo' }}
+       
       />
       <p style={{fontSize:"15px"}}>By creating an account, you agree to Samsara Wellness
 <a href="#" style={{color:"blue",marginLeft:"5px",marginRight:"5px",textDecoration:"none"}}>Terms & Conditions</a>
@@ -1686,14 +1711,14 @@ axios.post(`${Base_url}teacher_signup`, formData)
             </div>
           )}
 
-          <div
+          {/* <div
             style={{
               textAlign: "center",
               marginTop: "70px",
              
             }}
           >
-            <p style={{ fontSize: 15, fontWeight: "bold", color: "grey" }}>
+            <p style={{ fontSize: 15, fontWeight: "bold" }}>
               Already have an account?{" "}
               <span
                 style={{ color: "#EE731B", fontSize: 16, cursor: "pointer" }}
@@ -1702,38 +1727,13 @@ axios.post(`${Base_url}teacher_signup`, formData)
                 Login
               </span>
             </p>
-          </div>
+          </div> */}
         </div>
+      
       </div>
 
       
-        <div
-        id="container1"
-          style={{
-            flex: 1,
-            
-          }}
-        >
-          <div>
-            <div
-              style={{
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "95vh",
-                backgroundColor: "#FFFBF5",
-                boxShadow:
-                  "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
-                borderRadius: `${!isMobile ? "50px" : "0px"}`,
-                margin: `${!isMobile ? "30px" : "0px"}`,
-              }}
-            >
-              <img src={Logo} alt="img" />
-            </div>
-          </div>
-          {/* Add more content as needed */}
-        </div>
+     
     
     </div>
 

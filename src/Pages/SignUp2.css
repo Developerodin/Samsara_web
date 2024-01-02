@@ -9,15 +9,15 @@
     /* padding: 21px 0px  4px !important; */
 }
 
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+/* .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   color: #fff !important;
-}
+} */
 
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 21px 0px 4px !important;
 }
 
-#outlined-basic-label{
+/* #outlined-basic-label{
   color:#fff !important;
 }
 .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
@@ -30,11 +30,11 @@
 }
 .css-6hp17o-MuiList-root-MuiMenu-list {
   background: grey !important;
-}
+} */
 
 #noborder{
-  border: 0.5px dashed #fff ;
-  color:#fff;
+  border: 0.5px dashed black ;
+  color:black;
   
   padding:12px;
 }
