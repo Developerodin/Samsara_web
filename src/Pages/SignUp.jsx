@@ -391,7 +391,10 @@ export const SignUp = () => {
     formData1.append("country", userData.country);
     formData1.append("height", userData.height);
     formData1.append("weight", userData.weight);
-    formData1.append("health_issues", userData.health_issues);
+    userData.health_issues.forEach((el, index) => {
+      formData1.append('health_issues', el);
+    });
+    
     formData1.append("howyouknowus", userData.howyouknowus);
     formData1.append("PriorExperience", userData.PriorExperience);
     formData1.append("description", userData.description);
@@ -439,7 +442,10 @@ formData.append('password', formDataTrainer.password);
 formData.append('mobile', formDataTrainer.mobile);
 formData.append('dob', formDataTrainer.dob);
 formData.append('Address', formDataTrainer.Address);
-formData.append('expertise', formDataTrainer.Expertise);
+formDataTrainer.Expertise.forEach((el, index) => {
+  formData.append('expertise', el);
+});
+
 formData.append('city', formDataTrainer.city);
 formData.append('pincode', formDataTrainer.pincode);
 formData.append('country', formDataTrainer.country);
