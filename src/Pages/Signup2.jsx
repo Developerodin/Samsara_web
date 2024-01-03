@@ -612,10 +612,10 @@ axios.post(`${Base_url}teacher_signup`, formData)
       <div
         style={{
         
-          padding: "15px",
-          backgroundColor: "#fff",
+          padding: "25px",
+          
           margin: `${!isMobile ? "20px" : "0px"}`,
-          borderRadius: `${!isMobile ? "50px" : "0px"}`,
+          borderRadius: `${!isMobile ? "30px" : "0px"}`,
           width:`${!isMobile ? "50%" : "100%"}`
           // boxShadow:
           //   "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
@@ -684,7 +684,7 @@ axios.post(`${Base_url}teacher_signup`, formData)
             
             }}>
                       <Box sx={{ width: '100%' }}>
-      <Box sx={{ display:"flex",justifyContent:"center",alignItems:"center" }}>
+      <Box sx={{ display:"flex",justifyContent:"space-between",alignItems:"center" }}>
       <ThemeProvider theme={orangeTheme}>
         <Tabs value={value} onChange={handleChangetabs} aria-label="basic tabs example" textColor="primary"
         indicatorColor="primary"
