@@ -1,10 +1,27 @@
 import { Box, Button, Typography } from '@mui/material'
+import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { Base_url } from '../../Config/BaseUrl';
 
 export const EventsDetails = () => {
   const {eventId,userId} = useParams();
   
+  const applyForEvent = async (eventId, userId) => {
+    try {
+      const response = await axios.post(`${Base_url}api/event-applications/apply`, {
+        eventId,
+        userId,
+      });
+  
+      // Handle the response as needed
+      alert('Application submitted successful')
+      console.log('Application successful:', response.data);
+    } catch (error) {
+      // Handle errors
+      console.error('Error applying for event:', error);
+    }
+  };
 
   useEffect(()=>{
     if(userId.length > 1){
@@ -40,7 +57,7 @@ export const EventsDetails = () => {
       </Typography>
       </Box>
          <Box  sx={{marginTop:"40px",display:"flex",justifyContent:"center",alignItems:"center"}}>
-              <Button size='medium' variant='contained'>Apply</Button> 
+              <Button onClick={()=>applyForEvent(eventId,userId)} size='medium' variant='contained'>Apply</Button> 
          </Box>
        </Box>
     </Box>
