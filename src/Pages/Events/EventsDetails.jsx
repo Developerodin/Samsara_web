@@ -23,6 +23,8 @@ export const EventsDetails = () => {
     }
   };
 
+
+
   useEffect(()=>{
     if(userId.length > 1){
       localStorage.setItem('userId',userId);
@@ -56,7 +58,7 @@ export const EventsDetails = () => {
       wear comfortable clothing, and prepare to embark on a journey of self-discovery and well-being.
       </Typography>
       </Box>
-         <Box  sx={{marginTop:"40px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+         <Box  sx={{marginTop:"40px",display:"flex",justifyContent:"center",alignItems:"center",marginBottom:"60px"}}>
               <Button onClick={()=>applyForEvent(eventId,userId)} size='medium' variant='contained'>Apply</Button> 
          </Box>
        </Box>
