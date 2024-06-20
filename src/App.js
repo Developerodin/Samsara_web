@@ -8,6 +8,8 @@ import {Articles} from "./Pages/Articles"
 import {Pricing} from "./Pages/Pricing"
 import { ConformationPage } from './Pages/ConformationPage';
 import { TrainersSignup } from './Pages/TrainersSignup';
+import { EventsDetails } from './Pages/Events/EventsDetails';
+import { Events } from './Pages/Events/Events';
 function App() {
   return (
     <div className="App">
@@ -21,6 +23,8 @@ function App() {
           <Route path='/articles' exact element={ <Articles/>} />
           <Route path='/pricing' exact element={ <Pricing/>} />
           <Route path='/conformation' exact element={ <ConformationPage/>} />
+          <Route path='/event' exact element={ <Events/>} />
+          <Route path='/event-details/:eventId/:userId' exact element={ <EventsDetails/>} />
           
     </Routes>      
     </BrowserRouter>
