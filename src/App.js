@@ -10,6 +10,7 @@ import { ConformationPage } from './Pages/ConformationPage';
 import { TrainersSignup } from './Pages/TrainersSignup';
 import { EventsDetails } from './Pages/Events/EventsDetails';
 import { Events } from './Pages/Events/Events';
+import { PaymentPage } from './Pages/PaymentPage';
 function App() {
   return (
     <div className="App">
@@ -25,7 +26,7 @@ function App() {
           <Route path='/conformation' exact element={ <ConformationPage/>} />
           <Route path='/event' exact element={ <Events/>} />
           <Route path='/event-details/:eventId/:userId' exact element={ <EventsDetails/>} />
-          
+          <Route path='/payment/:userId' exact element={ <PaymentPage/>} />
     </Routes>      
     </BrowserRouter>
     </div>
