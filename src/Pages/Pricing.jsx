@@ -36,13 +36,15 @@ const StyledHeader = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   borderRadius: theme.shape.borderRadius,
+  marginLeft: theme.spacing(1),
 }));
 
 const StyledPriceContainer = styled(Box)(({ theme }) => ({
   backgroundColor: "#fff8f2",
-  padding: theme.spacing(1),
+  padding: theme.spacing(0),
   display: "flex",
   alignItems: "center",
+  marginLeft: theme.spacing(2),
 }));
 
 const StyledFeature = styled(Box)(({ theme }) => ({
@@ -63,19 +65,7 @@ export const Pricing = () => {
     navigate(`/payment/${userId}`);
   };
 
-  useEffect(() => {
-    const userDetailsFromStorage = async () => {
-      try {
-        const response = await axios.get("/path-to-your-api");
-        const data = response.data.user;
-        setUserData(data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    userDetailsFromStorage();
-  }, []);
+ 
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -93,7 +83,7 @@ export const Pricing = () => {
         </Box>
       ) : (
         <>
-          <Typography variant="h4" sx={{ marginTop: 2,marginLeft: 2 }}>
+          <Typography variant="h5" sx={{ marginTop: 2,marginLeft: 2 }}>
   Choose your plan
 </Typography>
 
@@ -102,27 +92,27 @@ export const Pricing = () => {
               <Typography variant="h5" sx={{fontWeight:'600'}}>Individual</Typography>
             </StyledHeader>
             <StyledPriceContainer>
-              <Typography variant="h3" color="#EA6C13">
+              <Typography variant="h5" color="#EA6C13">
                 ₹4999
               </Typography>
-              <Typography variant="h3">/mo</Typography>
+              <Typography variant="h5">/mo</Typography>
             </StyledPriceContainer>
             <Box padding={2}>
             <StyledFeature sx={{ display: 'flex', alignItems: 'center' }}>
-  <CheckCircleOutlineIcon sx={{ color: '#EA6C13' }} />
-  <Typography variant="body1" marginLeft={1}>
+  <CheckCircleOutlineIcon sx={{ color: '#ea6d13',fontSize: '20px' ,fontWeight:'500'}} />
+  <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
     Access Yoga Classes Worldwide
   </Typography>
 </StyledFeature>
               <StyledFeature>
-              <CheckCircleOutlineIcon sx={{ color: '#EA6C13' }} />
-                <Typography variant="body1" marginLeft={1}>
+              <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }} />
+                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' ,fontWeight:'500'}}>
                   Daily Yoga & Meditation Habits
                 </Typography>
               </StyledFeature>
               <StyledFeature>
-              <CheckCircleOutlineIcon sx={{ color: '#EA6C13' }} />
-                <Typography variant="body1" marginLeft={1}>
+              <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }}  />
+                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px',fontWeight:'500' }}>
                   Build Relationships with Teachers & Practitioners
                 </Typography>
               </StyledFeature>
@@ -131,7 +121,7 @@ export const Pricing = () => {
                 color="primary"
                 fullWidth
                 onClick={handlePlanClick}
-                sx={{ marginTop: 4 ,backgroundColor: '#EA6C13',borderRadius: '25px',}}
+                sx={{ marginTop: 4 ,backgroundColor: '#ea6d13',borderRadius: '25px',}}
               >
                 Get Plan
               </Button>
@@ -160,27 +150,27 @@ export const Pricing = () => {
               </Box>
             </StyledHeader>
             <StyledPriceContainer>
-              <Typography variant="h3" color="#EA6C13">
+              <Typography variant="h5" color="#EA6C13">
                 ₹14,997
               </Typography>
-              <Typography variant="h3">/6mo</Typography>
+              <Typography variant="h5">/6mo</Typography>
             </StyledPriceContainer>
             <Box padding={2}>
               <StyledFeature>
-              <CheckCircleOutlineIcon sx={{ color: '#EA6C13' }} />
-                <Typography variant="body1" marginLeft={1}>
+              <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }} />
+                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
                   Access Yoga Classes Worldwide
                 </Typography>
               </StyledFeature>
               <StyledFeature>
-              <CheckCircleOutlineIcon sx={{ color: '#EA6C13' }} />
-                <Typography variant="body1" marginLeft={1}>
+              <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize:"20px" }} />
+                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
                   Daily Yoga & Meditation Habits
                 </Typography>
               </StyledFeature>
               <StyledFeature>
-              <CheckCircleOutlineIcon sx={{ color: '#EA6C13' }} />
-                <Typography variant="body1" marginLeft={1}>
+              <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }} />
+                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
                   Build Relationships with Teachers & Practitioners
                 </Typography>
               </StyledFeature>
@@ -189,7 +179,7 @@ export const Pricing = () => {
                 color="primary"
                 fullWidth
                 onClick={handlePlanClick}
-                sx={{ marginTop: 4 ,backgroundColor: '#EA6C13',borderRadius: '25px'}}
+                sx={{ marginTop: 4 ,backgroundColor: '#ea6d13',borderRadius: '25px'}}
               >
                 Get Plan
               </Button>
