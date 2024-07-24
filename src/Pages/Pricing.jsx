@@ -99,23 +99,23 @@ export const Pricing = () => {
             </StyledPriceContainer>
             <Box padding={2}>
             <StyledFeature sx={{ display: 'flex', alignItems: 'center' }}>
-  <CheckCircleOutlineIcon sx={{ color: '#ea6d13',fontSize: '20px' ,fontWeight:'500'}} />
+  <CheckCircleOutlineIcon sx={{ color: '#ea6d13',fontSize: '20px' }} />
   <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
     Access Yoga Classes Worldwide
   </Typography>
 </StyledFeature>
               <StyledFeature>
               <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }} />
-                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' ,fontWeight:'500'}}>
+                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
                   Daily Yoga & Meditation Habits
                 </Typography>
               </StyledFeature>
-              <StyledFeature>
-              <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }}  />
-                <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px',fontWeight:'500' }}>
-                  Build Relationships with Teachers & Practitioners
-                </Typography>
-              </StyledFeature>
+              <StyledFeature sx={{ display: 'flex', alignItems: 'flex-start' }}>
+  <CheckCircleOutlineIcon sx={{ color: '#EA6C13', fontSize: '20px' }} />
+  <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
+    Build Relationships with Teachers & Practitioners
+  </Typography>
+</StyledFeature>
               <Button
                 variant="contained"
                 color="primary"
@@ -133,17 +133,16 @@ export const Pricing = () => {
           <StyledContainer>
             <StyledHeader>
               <Typography variant="h5" sx={{fontWeight:'600'}}>Individual</Typography>
-              <Box
+               <Box
                 display="flex"
                 alignItems="center"
-                bgcolor="primary.main"
+                bgcolor="#EA6C13"
                 color="white"
-                px={2}
+                px={1}
                 py={0.5}
                 borderRadius={2}
-                sx={{ backgroundColor: '#EA6C13' }}
               >
-                <StarOutlineIcon />
+                <StarOutlineIcon fontSize="small" />
                 <Typography variant="caption" marginLeft={0.5}>
                   Bestseller
                 </Typography>
@@ -168,7 +167,7 @@ export const Pricing = () => {
                   Daily Yoga & Meditation Habits
                 </Typography>
               </StyledFeature>
-              <StyledFeature>
+              <StyledFeature sx={{ display: 'flex', alignItems: 'flex-start' }}>
               <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }} />
                 <Typography variant="body1" marginLeft={1} sx={{ fontSize: '14px' }}>
                   Build Relationships with Teachers & Practitioners
