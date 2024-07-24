@@ -22,7 +22,7 @@ function App() {
           <Route path='/trainers-signup' exact element={ <TrainersSignup/>} />
           <Route path='/login' exact element={ <Login/>} />
           <Route path='/articles' exact element={ <Articles/>} />
-          <Route path='/pricing' exact element={ <Pricing/>} />
+          <Route path='/pricing/:userId' exact element={ <Pricing/>} />
           <Route path='/conformation' exact element={ <ConformationPage/>} />
           <Route path='/event' exact element={ <Events/>} />
           <Route path='/event-details/:eventId/:userId' exact element={ <EventsDetails/>} />
