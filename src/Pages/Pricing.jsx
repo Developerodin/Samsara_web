@@ -10,7 +10,7 @@ import {
   useTheme,
   useMediaQuery
 } from "@mui/material";
-import { CheckCircleOutline as CheckCircleOutlineIcon, StarOutline as StarOutlineIcon } from '@mui/icons-material';
+import { CheckCircleOutline as CheckCircleOutlineIcon,StarOutline as StarOutlineIcon } from '@mui/icons-material';
 import { styled } from "@mui/system";
 import axios from "axios";
 import { Base_url } from '../Config/BaseUrl';
@@ -20,13 +20,11 @@ import { useNavigate } from "react-router-dom";
 const StyledContainer = styled(Box)(({ theme }) => ({
   backgroundColor: "#fff8f2",
   padding: theme.spacing(0.5),
-  borderRadius: '20px',
+  borderRadius: '25px',
 
   border: `1px solid #EA6C13`,
-  marginTop: theme.spacing(2),
-  marginLeft: theme.spacing(2),
-  marginRight: theme.spacing(2),
-  marginBottom: theme.spacing(2),
+  margin: theme.spacing(2),
+  
 }));
 
 const StyledHeader = styled(Box)(({ theme }) => ({
@@ -128,7 +126,7 @@ export const Pricing = () => {
             </Box>
           </StyledContainer>
 
-          <Divider sx={{ borderColor: '#CCC', width: '80%', mx: 'auto' }} />
+          <Divider sx={{ borderColor: '#CCC', width: '80%', mx: 'auto',margin:'25px auto' }} />
 
           <StyledContainer>
             <StyledHeader>
@@ -149,11 +147,18 @@ export const Pricing = () => {
               </Box>
             </StyledHeader>
             <StyledPriceContainer>
-              <Typography variant="h5" color="#EA6C13">
-                ₹14,997
-              </Typography>
-              <Typography variant="h5">/6mo</Typography>
-            </StyledPriceContainer>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+  <div  style={{ textDecoration: 'line-through',color:"#EA6C13" ,fontSize:'1.5rem',lineHeight:'1.334',letterSpacing:'0em' }}>
+    ₹29,994<span style={{color:'black',fontWeight:'400'}}>/6mo</span>
+  
+  </div>
+
+
+  <Typography variant="h5" color="#EA6C13" sx={{}}>
+    ₹14,997/6mo SAVE 50%
+  </Typography>
+  </Box>
+</StyledPriceContainer>
             <Box padding={2}>
               <StyledFeature>
               <CheckCircleOutlineIcon sx={{ color: '#EA6C13',fontSize: '20px' }} />
