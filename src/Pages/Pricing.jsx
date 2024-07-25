@@ -129,6 +129,7 @@ export const Pricing = () => {
           <Divider sx={{ borderColor: '#CCC', width: '80%', mx: 'auto',margin:'25px auto' }} />
 
           <StyledContainer>
+            
             <StyledHeader>
               <Typography variant="h5" sx={{fontWeight:'600'}}>Individual</Typography>
                <Box
@@ -148,7 +149,7 @@ export const Pricing = () => {
             </StyledHeader>
             <StyledPriceContainer>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-  <div  style={{ textDecoration: 'line-through',color:"#EA6C13" ,fontSize:'1.5rem',lineHeight:'1.334',letterSpacing:'0em' }}>
+  <div  style={{ textDecoration: 'line-through',color:"#EA6C13" ,fontSize:'1.3rem',lineHeight:'1.334',letterSpacing:'0em' }}>
     ₹29,994<span style={{color:'black',fontWeight:'400'}}>/6mo</span>
   
   </div>
