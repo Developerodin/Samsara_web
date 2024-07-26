@@ -100,6 +100,11 @@ export const PaymentPage = () => {
         cursor: 'pointer',
     };
 
+    const handleBackToApp = () => {
+        window.location.href = 'samsara://home'; // Adjust this to match your app's deep link
+      };
+
+
     return (
         <div style={formContainerStyle}>
             <form onSubmit={handleSubmit} style={formStyle}>
@@ -119,7 +124,7 @@ export const PaymentPage = () => {
                     <label>Address:</label>
                     <input type="text" value={userData.address} readOnly style={inputStyle} />
                 </div>
-                <button type="submit" style={buttonStyle}>Proceed to Payment</button>
+                <button onClick={handleBackToApp} style={buttonStyle}>Proceed to Payment</button>
             </form>
         </div>
     );
