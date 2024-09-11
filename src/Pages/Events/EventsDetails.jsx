@@ -1,11 +1,15 @@
 import { Box, Button, Typography } from '@mui/material'
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect ,useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { Base_url } from '../../Config/BaseUrl';
 
 export const EventsDetails = () => {
   const {eventId,userId} = useParams();
+
+  // const eventId = "66e16fc428e05ab1a576a661";
+  const [eventDetails, setEventDetails] = useState(null);
+
   
   const applyForEvent = async (eventId, userId) => {
     try {
@@ -15,7 +19,7 @@ export const EventsDetails = () => {
       });
   
       // Handle the response as needed
-      alert('Application submitted successful')
+      alert('Application submitted successful');
       console.log('Application successful:', response.data);
     } catch (error) {
       // Handle errors
@@ -23,45 +27,96 @@ export const EventsDetails = () => {
     }
   };
 
-
-
-  useEffect(()=>{
-    if(userId.length > 1){
-      localStorage.setItem('userId',userId);
+  
+  const getEventDetails = async (eventId) => {
+    try {
+      const response = await axios.get(`${Base_url}api/events/${eventId}`);
+      console.log('Event details:', response.data);
+      setEventDetails(response.data);
+    } catch (error) {
+      console.error('Error fetching event details:', error);
     }
-   console.log("User id ==>",userId,"event id ==>",eventId)
-  },[])
+  };
+
+  useEffect(() => {
+    getEventDetails(eventId);
+  }, [eventId]);
+
+  useEffect(() => {
+    if (userId?.length > 1) {
+      localStorage.setItem('userId', userId);
+    }
+    console.log("User id ==>", userId, "event id ==>", eventId);
+  }, [userId, eventId]);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+  if (!eventDetails) {
+    // Render a loader or message while eventDetails is loading
+    return <Typography>Loading event details...</Typography>;
+  }
+
+  const defaultImageUrl = 'https://static.vecteezy.com/system/resources/previews/023/221/657/original/yoga-day-banner-design-file-vector.jpg';
+  const eventImageUrl = eventDetails.image && eventDetails.image.length > 0 && eventDetails.image[0]
+    ? `${Base_url}${eventDetails.image[0].path}`
+    : defaultImageUrl;
+
   return (
     <Box>
-      <img style={{height:"50vh",width:"100%"}} 
-      src='https://static.vecteezy.com/system/resources/previews/023/221/657/original/yoga-day-banner-design-file-vector.jpg'
+      <img style={{ height: "50vh", width: "100%" }}
+        src={eventImageUrl}
+        alt='Event Banner'
+      />
 
-       />
+      <Box style={{ padding: "10px" }}>
+        <Typography gutterBottom  component="div" sx={{fontSize:22}}>
+          {eventDetails.eventName} ({eventDetails.eventType}) 
+        </Typography>
+        
 
-       <Box style={{padding:"10px"}}>
-       <Typography gutterBottom variant="h5" component="div">
-       Yoga Session (In Person) 18 Jun 2024 12:00 PM
-      </Typography>
-     
       
-      <Box>
-      <Typography gutterBottom variant="h6" component="div">
-       Deatils
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-      Join us for a rejuvenating yoga session designed to balance mind, body, and spirit. Suitable 
-      for all levels, this event includes a blend of asanas (postures), pranayama (breathing exercises), 
-      and meditation techniques to enhance flexibility, strength, and inner peace. Led by an experienced instructor, 
-      you'll be guided through a sequence that promotes relaxation and mindfulness, leaving you refreshed and energized. 
-      Whether you're a seasoned yogi or a beginner, this session offers a welcoming space to practice, connect, and grow. 
-      Bring your mat, 
-      wear comfortable clothing, and prepare to embark on a journey of self-discovery and well-being.
-      </Typography>
+
+        <Box>
+          <Typography gutterBottom variant="h6" component="div">
+            Details
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+          Date & Time : {formatDate(eventDetails.startDate)} , {eventDetails.startTime}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{marginTop:1}}>
+            {eventDetails.details}
+          </Typography>
+        </Box>
+
+        {eventDetails.eventType === 'inPerson' && (
+          <Box style={{marginTop:10}}> 
+            <Typography gutterBottom variant="h6" component="div">
+            Location
+          </Typography>
+          <Typography variant="body2" color="text.secondary" >
+              Address: {eventDetails.address} , {eventDetails.city}, {eventDetails.state}
+            </Typography>
+            {/* <Typography variant="body2" >
+              City: 
+            </Typography>
+            <Typography variant="body2" >
+              State: 
+            </Typography> */}
+            
+            
+          </Box>
+        )}
+
+        <Box sx={{ marginTop: "40px", display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "60px" }}>
+          <Button onClick={() => applyForEvent(eventId, userId)} size='medium' variant='contained'>Register Now</Button>
+        </Box>
       </Box>
-         <Box  sx={{marginTop:"40px",display:"flex",justifyContent:"center",alignItems:"center",marginBottom:"60px"}}>
-              <Button onClick={()=>applyForEvent(eventId,userId)} size='medium' variant='contained'>Apply</Button> 
-         </Box>
-       </Box>
     </Box>
-  )
+  );
 }
